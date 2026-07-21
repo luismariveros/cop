@@ -1,0 +1,25 @@
+<odoo>
+  <data>
+
+    <record id="cron_auto_advance_projects" model="ir.cron">
+        <field name="name">Auto avanzar a Finalizado</field>
+        <field name="model_id" ref="model_project_project"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_auto_advance_projects()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+
+    </record>
+
+    <record id="cron_notify_pending_rendition" model="ir.cron">
+        <field name="name">Notificación para Rendición de Cuentas</field>
+        <field name="model_id" ref="model_project_project"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_notify_pending_rendition()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+
+    </record>
+    
+  </data>
+</odoo>
