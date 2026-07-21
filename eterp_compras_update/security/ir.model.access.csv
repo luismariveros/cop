@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_report_encabezado_user,report.encabezado.user,model_report_encabezado,purchase.group_purchase_user,1,0,0,0
+access_report_encabezado_manager,report.encabezado.manager,model_report_encabezado,purchase.group_purchase_manager,1,1,1,1
+access_mail_activity_daf,mail.activity.daf,mail.model_mail_activity,eterp_compras_update.group_daf,1,1,1,1
