@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Plantilla para el reporte de prueba con marca de agua -->
+        <template id="report_purchase_order_test">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!-- Add variable to check if any line has monto_usd -->
+                    <t t-set="has_usd_amount" t-value="any(line.monto_usd != 0 for line in o.order_line)"/>
+                    
+                    <t t-call="web.external_layout">
+                      <style>
+                        * {
+                            font-size: 11px; /* Reduce el tamaño de la fuente en todo el reporte */
+                        }
+                        
+                        h4 {
+                            font-size: 12px; /* Ajusta el tamaño del título */
+                        }
+
+                        .table th, .table td {
+                            font-size: 11px; /* Reduce el tamaño de fuente en las tablas */
+                        }
+                        
+                        .font-13-px-bold {
+                            font-size: 11px !important;
+                        }
+
+                        .text-right, .text-center {
+                            font-size: 11px;
+                        }
+                        
+                        /* Estilo para las marcas de agua múltiples */
+                        .page {
+                            position: relative;
+                            z-index: 1;
+                        }
+                        
+                        .watermark-container {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            z-index: -1;
+                            overflow: hidden;
+                        }
+                        
+                        .watermark-pattern {
+                            position: absolute;
+                            width: 100%;
+                            height: 200%;
+                            top: -50%;
+                            left: -50%;
+                            opacity: 0.2;
+                        }
+                        
+                        .watermark-text {
+                            position: absolute;
+                            color: red;
+                            font-size: 30px;
+                            transform: rotate(-45deg);
+                            white-space: nowrap;
+                            opacity: 0.3;
+                        }
+                        
+                        /* Crear múltiples instancias de la marca de agua */
+                        .watermark-1 { top: 10%; left: 10%; }
+                        .watermark-2 { top: 30%; left: 30%; }
+                        .watermark-3 { top: 50%; left: 10%; }
+                        .watermark-4 { top: 70%; left: 30%; }
+                        .watermark-5 { top: 90%; left: 10%; }
+                    </style>
+
+                        <div class="page">
+                            <!-- Contenedor para múltiples marcas de agua -->
+                            <div class="watermark-container">
+                                <div class="watermark-text watermark-1">DOCUMENTO NO VÁLIDO - SOLO PRUEBA</div>
+                                <div class="watermark-text watermark-2">DOCUMENTO NO VÁLIDO - SOLO PRUEBA</div>
+                                <div class="watermark-text watermark-3">DOCUMENTO NO VÁLIDO - SOLO PRUEBA</div>
+                                <div class="watermark-text watermark-4">DOCUMENTO NO VÁLIDO - SOLO PRUEBA</div>
+                                <div class="watermark-text watermark-5">DOCUMENTO NO VÁLIDO - SOLO PRUEBA</div>
+                            </div>
+                            
+                            <!-- Encabezado con logotipos -->
+                            <div class="row mb-4" style="border-bottom: 1px solid black;">
+                                <div class="col-3 text-center">
+                                    <img t-if="encabezado.imagen_izquierda" t-att-src="image_data_uri(encabezado.imagen_izquierda)" style="max-height: 180px;"/>
+                                </div>
+                                <div class="col-3 text-center">
+                                    <img t-if="encabezado.imagen_centro_izquierda" t-att-src="image_data_uri(encabezado.imagen_centro_izquierda)" style="max-height: 130px;"/>
+                                </div>
+                                <div class="col-3 text-center">
+                                    <img t-if="encabezado.imagen_centro_derecha" t-att-src="image_data_uri(encabezado.imagen_centro_derecha)" style="max-height: 130px;"/>
+                                </div>
+                                <div class="col-3 text-center">
+                                    <img t-if="encabezado.imagen_derecha" t-att-src="image_data_uri(encabezado.imagen_derecha)" style="max-height: 130px;"/>
+                                </div>
+                            </div>
+                            
+                            <!-- Título del reporte -->
+                            <div class="text-center mb-4" style="font-size: 16px !important;">
+                                <h4><strong>ORDEN DE COMPRA/SERVICIO (PRUEBA)</strong></h4>
+                            </div>
+                            
+                            <!-- Información del proyecto -->
+                            <div class="mb-3" style="font-size: 12px !important;">
+                                <strong>PROYECTO/LICITACIÓN: </strong>
+                                <span t-if="o.proyect_id">
+                                    "<span t-esc="o.proyect_id.name"/>"
+                                    <t t-if="o.proyect_id.juridica_ids">
+                                        <br/><strong>CONVENIO N°: </strong> <span t-esc="o.proyect_id.juridica_ids[0].convenio_uep or ''"/>
+                                    </t>
+                                </span>
+                            </div>
+                        
+                            <!-- Número y fecha -->
+                            <div class="row mb-3" style="font-size: 12px !important;">
+                                <div class="col-7"/>
+                                <div class="col-5 text-end ms-auto">
+                                    <strong>N°: </strong><span t-esc="o.name"/>
+                                    <br/>
+                                    <span t-field="o.fecha_orden" t-options="{'widget': 'date', 'format': 'dd \'de\' MMMM \'de\' yyyy'}"/>
+                                </div>
+                            </div>
+
+                            
+                            <!-- Información del proveedor -->
+                            <div class="mb-4" style="font-size: 12px !important;">
+                                <strong>SEÑOR (ES):</strong> 
+                                <span t-esc="o.partner_id.name + ' (' + (o.partner_id.nf or '') + ')'"/><br/>
+
+                                <strong>R.U.C.:</strong> <span t-esc="o.partner_id.ruc or ''"/><br/>
+                                <strong>DIRECCIÓN:</strong> <span t-esc="o.partner_id.street or ''"/>
+                                <t t-if="o.partner_id.city">
+                                    – <span t-esc="o.partner_id.city"/>
+                                </t>
+                            </div>
+                            <hr style="border: 1px solid black;"/>
+                            
+                            <!-- Tabla de productos -->
+                            <table class="table table-bordered mt-4">
+                            <t t-set="colspan_total" t-value="4 if has_usd_amount else 3"/>
+                            
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Cant.</th>
+                                    <th class="text-center">Descripción</th>
+                                    <!-- Mostrar columna de USD solo si hay montos en USD -->
+                                    <th t-if="has_usd_amount" class="text-center">Precio <t t-esc="o.currency_custom_id.name"/></th>
+                                    <th class="text-center">Precio Unitario</th>
+                                    <th class="text-center">Precio Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.order_line" t-as="line">
+                                    <tr>
+                                        <td class="text-center"><span t-esc="int(line.product_qty) if line.product_qty == int(line.product_qty) else line.product_qty"/></td>
+                                        <td><span t-esc="line.name"/></td>
+                                        <!-- Mostrar monto en USD solo si hay montos en USD -->
+                                        <td t-if="has_usd_amount" class="text-right" style="text-align: right;">
+                                            <span t-esc="'{:,.2f}'.format(line.monto_usd)"/>
+                                        </td>
+                                        <td class="text-right" style="text-align: right;">
+                                            <span t-esc="'{:,.0f}'.format(line.price_unit).replace(',', '.')"/>
+                                        </td>
+                                        <td class="text-right" style="text-align: right;">
+                                            <span t-esc="'{:,.0f}'.format(line.price_subtotal).replace(',', '.')"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <!-- Ajustar colspan basado en si estamos mostrando la columna USD -->
+                                    <td t-att-colspan="colspan_total" class="text-right"><strong>TOTAL, GENERAL EN GUARANÍES:</strong></td>
+                                    <td class="text-right" style="text-align: right;"><strong><span t-esc="'{:,.0f}'.format(o.amount_total).replace(',', '.')"/></strong></td>
+                                    <!-- Agregar celda vacía para USD si es necesario -->
+                                    <td t-if="has_usd_amount"/>
+                                </tr>
+                            </tfoot>
+
+                            </table>
+                            
+                            <!-- Total en letras -->
+                            <div class="mb-5" style="font-size: 12px !important;">
+                                <strong>SON GUARANÍES:</strong> <span t-esc="importe_letras"/>
+                                <hr/>
+                            </div>
+                            
+
+                            <div class="font-13-px-bold">
+                                <b>Notas:</b>
+                                <span t-esc="o.notes"/>
+                            </div>
+ 
+                            <!-- Firmas -->
+                            <div class="row mt-5 pt-5 text-center" style="page-break-inside: avoid;">
+                                <div class="col-6">
+                                    <hr style="width: 80%; margin: 0 auto;"/>
+                                    <p><strong>LIC. CARLOS MARTÍNEZ</strong><br/>
+                                    DIRECCIÓN DE ADMINISTRACIÓN Y FINANZAS<br/>
+                                    II JUEGOS PANAMERICANOS JUNIOR 2025</p>
+                                </div>
+                                <div class="col-6">
+                                    <hr style="width: 80%; margin: 0 auto;"/>
+                                    <p><br/>
+                                    DIRECCIÓN GENERAL<br/>
+                                    II JUEGOS PANAMERICANOS JUNIOR 2025</p>
+                                </div>
+                            </div>
+
+                            <!-- Tercera firma centrada abajo -->
+                            <div class="row mt-5 text-center" style="page-break-inside: avoid;">
+                                <div class="col-12">
+                                    <hr style="width: 30%; margin: 0 auto;"/>  <!-- Línea más corta y centrada -->
+                                    <p><strong><span t-esc="departamento"/></strong><br/>
+                                    II JUEGOS PANAMERICANOS JUNIOR 2025</p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <!-- Acción del Reporte de Prueba -->
+        <report 
+            id="orden_compras_test_report"
+            model="purchase.order"
+            string="Solicitud de Compras - PRUEBA"
+            report_type="qweb-pdf"
+            name="eterp_compras_update.report_purchase_order_test"
+            file="eterp_compras_update.report_purchase_order_test"
+            print_report_name="'Orden de Compra/Servicio PRUEBA ' + object.name"
+            paperformat="eterp_compras_update.report_orden_compras"
+        />
+    </data>
+</odoo>

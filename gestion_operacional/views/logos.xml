@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista Formulario -->
+    <record id="view_gestion_operacional_logo_form" model="ir.ui.view">
+        <field name="name">gestion.operacional.logo.form</field>
+        <field name="model">gestion.operacional.logo</field>
+        <field name="arch" type="xml">
+            <form string="Gestión de Logos para Reportes">
+                <sheet>
+                    <group string="Logos para Reportes">
+                        <field name="name"/>
+                        <field name="logo_1" widget="image" class="oe_avatar" options="{'size': [128, 128]}"/>
+                        <field name="logo_2" widget="image" class="oe_avatar" options="{'size': [128, 128]}"/>
+                        <field name="logo_3" widget="image" class="oe_avatar" options="{'size': [128, 128]}"/>
+                        <field name="logo_4" widget="image" class="oe_avatar" options="{'size': [128, 128]}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista Tree -->
+    <record id="view_gestion_operacional_logo_tree" model="ir.ui.view">
+        <field name="name">gestion.operacional.logo.tree</field>
+        <field name="model">gestion.operacional.logo</field>
+        <field name="arch" type="xml">
+            <tree string="Logos para Reportes">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción de ventana -->
+    <record id="action_logos_gestion_operacional" model="ir.actions.act_window">
+        <field name="name">Logos para Reportes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gestion.operacional.logo</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menú -->
+    <menuitem
+        id="menu_logos_gestion_operacional"
+        name="Logos para Reporte"
+        sequence="10"
+        action="action_logos_gestion_operacional"
+        parent="menu_gestion_operacional"
+    />
+</odoo>

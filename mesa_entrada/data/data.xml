@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Secuencia para generación de número de expediente -->
+    <record id="seq_eterp_mesa_entrada_expediente" model="ir.sequence">
+        <field name="name">Secuencia de Expedientes</field>
+        <field name="code">eterp.mesa.entrada.expediente</field>
+        <field name="prefix">EXP/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

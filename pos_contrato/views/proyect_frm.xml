@@ -1,0 +1,96 @@
+<odoo>
+  <data>
+   <record id="view_project_form_inherit_coordinator" model="ir.ui.view">
+      <field name="name">project.project.form.coordinator</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.edit_project"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='user_id']" position="after">
+          <field name="coordinator_id" invisible="1"/>
+        </xpath>
+          <!-- Ajustar campo name para que no se trunque -->
+        <xpath expr="//div[@class='oe_title']/h1" position="replace">
+        <div  style="width: 100%;">
+            <field name="name" widget="text" placeholder="Nombre del proyecto"
+                style="width: 100%; min-height: 60px; white-space: normal;"/>
+        </div>
+        </xpath>
+        
+                <xpath expr="//field[@name='name']" position="after">
+            <div>
+                 <label for="mesa_expediente_id" class="o_form_label">Nro. de Expediente</label>
+            <field name="mesa_expediente_id" string="Expediente"/>
+            </div>
+        </xpath>
+      </field>
+    </record>
+    <record id="view_project_form_custom_user_id_string" model="ir.ui.view">
+        <field name="name">project.project.form.user_id.string</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/> <!-- o usa el ID correcto si es otra vista -->
+        <field name="arch" type="xml">
+            <!-- Buscamos el campo user_id por xpath y le cambiamos el string -->
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="string">Elaborado por</attribute>
+            </xpath>
+           <!-- Cambiar texto del label de date_start -->
+            <xpath expr="//label[@for='date_start']" position="attributes">
+                <attribute name="string">Marco Temporal</attribute>
+            </xpath>
+            
+            <xpath expr="//field[@name='label_tasks']" position="replace"/>
+        </field>
+
+    </record>
+    <record id="view_project_form_remove_allocated_hours" model="ir.ui.view">
+      <field name="name">project.project.form.remove.allocated.hours</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="hr_timesheet.project_invoice_form"/>
+      <field name="arch" type="xml">
+        <!-- Este campo fue agregado en un xpath anterior -->
+        <xpath expr="//field[@name='allocated_hours']" position="replace"/>
+      </field>
+    </record>
+
+
+        <record id="eterp_pos_contrato.view_project_form_inherit_proveedores" model="ir.ui.view">
+      <field name="name">project.project.form.inherit.proveedores</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="eterp_proyecto_update.view_project_form_inherit_proveedores"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='departamento_id']" position="attributes">
+                <attribute name="string">Área Técnica</attribute>
+            </xpath>
+      </field>
+    </record>
+
+
+
+
+<record id="view_project_form_inherit_hide_tabs" model="ir.ui.view">
+  <field name="name">project.project.form.hide.tabs</field>
+  <field name="model">project.project</field>
+  <field name="inherit_id" ref="project.edit_project"/>
+  <field name="arch" type="xml">
+
+    <!-- Ocultar la pestaña Description -->
+    <xpath expr="//page[@name='description']" position="attributes">
+      <attribute name="invisible">1</attribute>
+    </xpath> 
+
+    <!-- Ocultar la pestaña Settings -->
+    <xpath expr="//page[@name='settings']" position="attributes">
+      <attribute name="invisible">1</attribute>
+    </xpath>
+<xpath expr="//notebook/page[5]" position="attributes">
+      <attribute name="invisible">1</attribute>
+    </xpath>
+
+  </field>
+</record>
+
+
+
+
+  </data>
+</odoo>

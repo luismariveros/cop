@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="reporte_gestion_operacional_og879" model="report.paperformat">
+        <field name="name">Ficha de Verificación OG879</field>
+        <field name="format">Legal</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">15</field>
+        <field name="margin_right">15</field>
+        <field name="header_spacing">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <!-- Acción del Reporte -->
+    <report 
+        id="gestion_operacional_og879_report"
+        model="gestion.operacional"
+        string="Reporte OG879 - Transferencias de Capital"
+        report_type="qweb-pdf"
+        name="eterp_gestion_operacional.report_gestion_operacional_og879"
+        file="eterp_gestion_operacional.report_gestion_operacional_og879"
+        print_report_name="'GestionOperacionalOG879_%s' % (object.expediente)"
+        paperformat="eterp_gestion_operacional.reporte_gestion_operacional_og879"
+    />
+
+    <!-- Plantilla del Reporte -->
+    <template id="report_gestion_operacional_og879">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                <t t-foreach="doc.control_879_ids" t-as="control">
+                    <div class="page" style="page-break-after: always; font-family: Arial, sans-serif;">
+                        <!-- Report Headers -->
+                        <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif;">
+                            <tr>
+                                <!-- Acceso a imágenes desde la carpeta static del módulo -->
+                                <td style="width: 20%;"><img t-att-src="'/eterp_gestion_operacional/static/img/snd.png'" alt="SND Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 20%;"><img t-att-src="'/eterp_gestion_operacional/static/img/cop.png'" alt="COP Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 20%;"><img t-att-src="'/eterp_gestion_operacional/static/img/asu.png'" alt="ASU Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 20%;"><img t-att-src="'/eterp_gestion_operacional/static/img/panam.png'" alt="Panamerican Logo" style="max-width: 150px;"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" style="border-bottom: 1px solid #000; padding: 10px 0; text-align: center;">DIRECCIÓN DE ADMINISTRACIÓN Y FINANZAS - ASU 2025</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" style="border-bottom: 1px solid #000; padding: 10px 0; text-align: center;">UNIDAD DE GESTIÓN OPERACIONAL</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" style="border-bottom: 1px solid #000; padding: 10px 0; text-align: center;">FORMULARIO DE VERIFICACIÓN OG879 - TRANSFERENCIAS DE CAPITAL - N° <t t-esc="doc.expediente or ''"/> /2025</td>
+                            </tr>
+                        </table>
+
+                        <!-- Información general -->
+                         <table class="table table-no-border" style="width: 100%; margin-top: 10px; margin-bottom: 10px; font-size: 12px;">
+                            <tr>
+                                <td style="width: 10%; padding: 5px; border: 1px solid #dee2e6;"><strong>Expediente N°:</strong></td>
+                                <td style="width: 50%; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="doc.expediente or ''"/></td>
+                                <td style="width: 10%; padding: 5px; border: 1px solid #dee2e6;"><strong>Fecha y Hora de Recepción:</strong></td>
+                                <td style="width: 50%; padding: 5px; border: 1px solid #dee2e6; text-align: right;"><t t-esc="doc.fecha_recepcion_expediente_gmt3 or ''"/></td>         
+                            </tr>
+                            <tr>
+                                <td style="width: 10%; padding: 5px; border: 1px solid #dee2e6;"><strong>Proyecto:</strong></td>
+                                <td style="width: 50%; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="doc.proyecto_id.name or ''"/></td>
+                                <td style="padding: 5px; border: 1px solid #dee2e6;"><strong>Solicitante:</strong></td>
+                                <td style="padding: 5px; border: 1px solid #dee2e6; text-align: right;"><t t-esc="doc.area_solicitante.name or ''"/></td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 5px; border: 1px solid #dee2e6;"><strong>Fecha Revisión:</strong></td>
+                                <td style="padding: 5px; border: 1px solid #dee2e6;"><t t-esc="doc.fecha.strftime('%d/%m/%Y') if doc.fecha else ''"/></td>
+                                <td style="padding: 5px; border: 1px solid #dee2e6;"><strong>Monto Total del Proyecto:</strong></td>
+                                <td style="padding: 5px; border: 1px solid #dee2e6; text-align: right;"><t t-esc="'{:,.0f}'.format(doc.monto_total_proyecto or 0).replace(',', '.')"/> Gs</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px; border: 1px solid #dee2e6;"><strong>Revisión N°</strong></td>
+                                <td style="padding: 5px; border: 1px solid #dee2e6;"><t t-esc="detalle_index"/></td>
+                                <td style="width: 15%; padding: 5px; border: 1px solid #dee2e6;"><strong>Monto Solicitado:</strong></td>
+                                <td style="width: 25%; padding: 5px; border: 1px solid #dee2e6; text-align: right;"><t t-esc="'{:,.0f}'.format(doc.monto or 0).replace(',', '.')"/> Gs</td>
+                                
+                            </tr>
+                        </table>
+                        <!-- Tabla de verificación y control -->
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px;">
+                            <tr>
+                                <td style="width: 10%; border: 1px solid #dee2e6; text-align: center; padding: 5px; background-color: #f2f2f2;"><strong>Item N°</strong></td>
+                                <td style="width: 60%; border: 1px solid #dee2e6; text-align: center; padding: 5px; background-color: #f2f2f2;"><strong>Verificación y Control de Cumplimiento del Reglamento Interno UEP-SND</strong></td>
+                                <td style="width: 10%; border: 1px solid #dee2e6; text-align: center; padding: 5px; background-color: #f2f2f2;"><strong>CUMPLE</strong></td>
+                                <td style="width: 10%; border: 1px solid #dee2e6; text-align: center; padding: 5px; background-color: #f2f2f2;"><strong>NO CUMPLE</strong></td>
+                                <td style="width: 10%; border: 1px solid #dee2e6; text-align: center; padding: 5px; background-color: #f2f2f2;"><strong>NO APLICA</strong></td>
+                            </tr>
+                        </table>
+
+                        <!-- Título para REGLAMENTO INTERNO UEP - SND / CONTROL OG 879 -->
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 5px;">
+                            <tr>
+                                <td style="border: 1px solid #dee2e6; text-align: center; padding: 5px; background-color: #d9d9d9; font-weight: bold;">
+                                    REGLAMENTO INTERNO UEP - SND / CONTROL OG 879 "TRANSFERENCIAS DE CAPITAL AL SECTOR PRIVADO VARIAS"
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Campos de Cumplimiento para OG879 - Lista 1 -->
+                        <t t-set="fields_list_1" t-value="[
+                            ('art6_1', 'a) Programas o Proyectos Deportivos o cualquier tipo de eventos financiados por el Objeto de Gasto 879: Deberán ser presentados hasta el 10 (diez) del mes de evaluación del proyecto, si este día fuere un día inhábil, el plazo se extenderá hasta el primer día hábil siguiente, en ambos casos.'),
+                            ('art7_1', 'a) Para Entidades Inscritas en el Registro de Entidades Deportivas: La Nota deberá estar suscripta (con firmas originales) por representantes autorizados conforme a las normativas vigentes. Deberá especificar el nombre del proyecto, detalle del tipo de bienes y/o servicios, eventos o actividades, fechas o periodos de realización y el monto en guaraníes.'),
+                            ('art7_2', 'Formulario de Elaboración de Proyectos - Ficha Técnica (con firmas originales) (Anexo II)'),
+                            ('art7_3', 'Copia del Acta de sesión de la Comisión Directiva, donde se aprueba el pedido de subvención, la cual deberá estar certificada por el secretario/a de la Entidad Deportiva.'),
+                            ('art7_4', 'Formulario B-01-01 B Programación de Ingresos (Anexo III)'),
+                            ('art7_5', 'Formulario B-01-01 C Programación de Gastos (Anexo IV)'),
+                            ('art7_6', 'Formulario B-01-01 D Planificación de Servicios Entregados y Asignación Financiera (Anexo V)'),
+                            ('art7_7', 'Constancia de Inscripción en el IDAP (Identificador del Acreedor Presupuestario), aplica para entidades que reciban subvenciones por primera vez.'),
+                            ('art7_8', 'Copia del Registro Único del Contribuyente (RUC).'),
+                            ('art7_9', 'Copia de Cédula Tributaria y Perfil del Contribuyente, aplica para Entidades que reciban subvenciones por primera vez.'),
+                            ('art7_10', 'Certificado original y vigente de Cuenta Bancaria, Cuenta Corriente o Caja de Ahorro, aplica para Entidades que reciban subvenciones por primera vez, en caso de modificación (Cuenta, número de cuenta y/o personas autorizadas), se deberá informar por mesa de entrada institucional hasta el 20 de cada mes, a la UEP - SND.'),
+                            ('art10_1', 'Para las transferencias de capital imputables al Objeto del Gasto 879, sólo se podrán programar gastos de inversión destinados a los IV Juegos Latinoamericanos de Olimpiadas Especiales 2024 y II Juegos Panamericanos Junior 2025.'),
+                            ('art10_2', 'Las obras de infraestructura a ser realizadas deberán estar contempladas en el Convenio Marco aprobado.')
+                        ]" />
+
+                        <!-- Campos de Cumplimiento para OG879 - Lista 2 -->
+                        <t t-set="fields_list_2" t-value="[
+                            ('anexo12', 'Anexo XII: Documento de aprobación de proyecto de obras'),
+                            ('anexo13', 'Anexo XIII: Documento para pago de proyecto de obras'),
+                            ('anexo14', 'Anexo XIV: Resumen de certificado de obras'),
+                            ('anexo15', 'Anexo XV: Certificado de obras'),
+                            ('anexo16', 'Anexo XVI: Cómputo métrico y presupuesto de obra'),
+                            ('anexo17', 'Anexo XVII: Cronograma físico financiero de obra'),
+                            ('anexo18', 'Anexo XVIII: Análisis fotográficos de obras'),
+                            ('art11_1', 'a) Póliza de Seguro de Ejecución de contrato de obras públicas o privadas (10% del monto de la obra aprobada)'),
+                            ('art11_2', 'b) Póliza de Seguro de Anticipo Financiero (podrá ser otorgado un anticipo de hasta el 20% y asegurado al 100% del anticipo)'),
+                            ('art11_3', 'c) Póliza de Seguro de Responsabilidad Civil.'),
+                            ('art11_4', 'd) Póliza de Seguro Contra Todo Riesgo Contratista.'),
+                            ('art11_5', 'e) Póliza de Seguro por Accidentes Personales (conforme a cantidad de personal y salarios).'),
+                            ('art11_6', 'En caso de modificación del cronograma de ejecución del proyecto que implique un desplazamiento o ampliación del plazo contractual, la vigencia de la Garantía deberá ser ampliada a efectos de seguir cubriendo el plazo de 60 (sesenta) días posteriores al término de la vigencia del contrato.'),
+                            ('art11_7', 'La Entidad solicitante deberá presentar a la UEP - SND, copias de las pólizas por el contratista, dentro de los 5 (cinco) días de su emisión respectiva.')
+                        ]" />
+                        
+                        <!-- Campos de Cumplimiento para OG879 - Lista 3 -->
+                        <t t-set="fields_list_3" t-value="[
+                            ('art15_1', 'Para la adquisición de bienes y servicios u obras a partir de Gs.: 4.999.999.-, las Entidades deberán realizar un proceso competitivo de adquisión con por lo menos 3 (tres) presupuestos que deberán contener los siguientes datos verificables: razón social, N° de teléfono, domicilio, especificar RUC, dirección, fecha de emisión, período de vigencia de la oferta, descripción de los bienes a proveer, cantidades, precios unitarios y totales.'),
+                            ('art15_2', 'Cuadro comparativo de ofertas - Formulario B 02-08 (Anexo IX) con el respectivo proyecto.'),
+                            ('art15_3', 'a) Prestaciones de servicios que alcancen el monto de Gs.: 4.999.999.-'),
+                            ('art15_4', 'b) Compras de un mismo proveedor, dentro del mismo mes, cuyo importe individual o la sumatoria de ésta alcancen o superen la suma de Gs.: 4.999.999.-'),
+                            ('art15_5', 'c) En caso de productos o bienes adquiridos de un representante exclusivo se deberá acompañar una nota de aclaración emitida y firmada por el proveedor o documento que lo acredite.'),
+                            ('art18_1', 'Logo de UEP - SND, Gobierno Nacional, COP, PANAM u Olimpiadas especiales, de acuerdo con el proyecto subvencionado.')
+                        ]" />
+
+                        <!-- Table structure fix - ensure proper alignment -->
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                            <tr>
+                                <td style="width: 10%; text-align: center; padding: 5px; border: 1px solid #dee2e6; font-weight: bold; background-color: #f2f2f2;">Art. N° 6</td>
+                                <td style="width: 90%; text-align: left; padding: 5px; border: 1px solid #dee2e6; font-weight: bold;">Plazos para la presentación de los proyectos, solicitudes de desembolsos y/o reconsideraciones.</td>
+                            </tr>
+                        </table>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                            <t t-foreach="fields_list_1[:1]" t-as="field">
+                                <tr>
+                                    <td style="width: 5%; text-align: center; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field_index + 1"/></td>
+                                    <td style="width: 75%; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field[1]"/></td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'cumple'">X</t>
+                                    </td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'no_cumple'">X</t>
+                                    </td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'no_aplica'">X</t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 5px;">
+                            <tr>
+                                <td style="width: 10%; text-align: center; padding: 5px; border: 1px solid #dee2e6; font-weight: bold; background-color: #f2f2f2;">Art. N° 7</td>
+                                <td style="width: 90%; text-align: left; padding: 5px; border: 1px solid #dee2e6; font-weight: bold;">Las solicitudes de subvención regidos por esta reglamentación deberán ser presentadas a través de la Dirección General de la UEP - SND, conforme a los siguientes parámetros:</td>
+                            </tr>
+                        </table>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                            <t t-foreach="fields_list_1[1:11]" t-as="field">
+                                <tr>
+                                    <td style="width: 5%; text-align: center; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field_index + 2"/></td>
+                                    <td style="width: 75%; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field[1]"/></td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'cumple'">X</t>
+                                    </td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'no_cumple'">X</t>
+                                    </td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'no_aplica'">X</t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 5px;">
+                            <tr>
+                                <td style="width: 10%; text-align: center; padding: 5px; border: 1px solid #dee2e6; font-weight: bold; background-color: #f2f2f2;">Art. 10</td>
+                                <td style="width: 90%; text-align: left; padding: 5px; border: 1px solid #dee2e6; font-weight: bold;">Objeto del Gasto 879 "Transferencias de Capital al sector privado varias".</td>
+                            </tr>
+                        </table>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                            <t t-foreach="fields_list_1[11:13]" t-as="field">
+                                <tr>
+                                    <td style="width: 5%; text-align: center; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field_index + 12"/></td>
+                                    <td style="width: 75%; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field[1]"/></td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'cumple'">X</t>
+                                    </td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'no_cumple'">X</t>
+                                    </td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'no_aplica'">X</t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 5px;">
+                            <tr>
+                                <td style="width: 100%; text-align: left; padding: 5px; border: 1px solid #dee2e6; font-weight: bold;">Para todas las subvenciones de capital que impliquen obras civiles, se deberán acompañar las Especificaciones Técnicas, además de establecidos en los anexos.</td>
+                            </tr>
+                        </table>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                            <t t-foreach="fields_list_2[:7]" t-as="field">
+                                <tr>
+                                    <td style="width: 5%; text-align: center; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field_index + 14"/></td>
+                                    <td style="width: 75%; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field[1]"/></td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'cumple'">X</t>
+                                    </td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'no_cumple'">X</t>
+                                    </td>
+                                    <td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+                                        <t t-if="control[field[0]] == 'no_aplica'">X</t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+
+                        <!-- Segunda página para continuar el resto de los campos -->
+                        <div style="page-break-before: always;"></div>
+                        <br/>
+                        <!-- Repetir encabezado en la segunda página -->
+                        <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif;">
+                            <tr>
+                                <!-- Acceso a imágenes desde la carpeta static del módulo -->
+                                <td style="width: 20%;"><img t-att-src="'/eterp_gestion_operacional/static/img/snd.png'" alt="SND Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 20%;"><img t-att-src="'/eterp_gestion_operacional/static/img/cop.png'" alt="COP Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 20%;"><img t-att-src="'/eterp_gestion_operacional/static/img/asu.png'" alt="ASU Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 20%;"><img t-att-src="'/eterp_gestion_operacional/static/img/panam.png'" alt="Panamerican Logo" style="max-width: 150px;"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" style="border-bottom: 1px solid #000; padding: 10px 0; text-align: center;">DIRECCIÓN DE ADMINISTRACIÓN Y FINANZAS - ASU 2025</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" style="border-bottom: 1px solid #000; padding: 10px 0; text-align: center;">UNIDAD DE GESTIÓN OPERACIONAL</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" style="border-bottom: 1px solid #000; padding: 10px 0; text-align: center;">FORMULARIO DE VERIFICACIÓN OG879 - TRANSFERENCIAS DE CAPITAL - N° <t t-esc="doc.expediente or ''"/> /2025</td>
+                            </tr>
+                        </table>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 5px;">
+                            <tr>
+                                <td style="width: 10%; text-align: center; padding: 5px; border: 1px solid #dee2e6; font-weight: bold; background-color: #f2f2f2;">Art. 11</td>
+                                <td style="width: 90%; text-align: left; padding: 5px; border: 1px solid #dee2e6; font-weight: bold;">Pólizas de Seguros.</td>
+                            </tr>
+                        </table>
+
+<table style="width: 100%; border-collapse: collapse; font-size: 11px;"> 
+<t t-foreach="fields_list_2[7:14]" t-as="field"> 
+<tr> 
+<td style="width: 5%; text-align: center; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field_index + 21"/></td> 
+<td style="width: 75%; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field[1]"/></td> 
+<td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;"> 
+<t t-if="control[field[0]] == 'cumple'">X</t> 
+</td> 
+<td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;"> 
+<t t-if="control[field[0]] == 'no_cumple'">X</t> 
+</td> 
+<td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;"> 
+<t t-if="control[field[0]] == 'no_aplica'">X</t> 
+</td> 
+</tr> 
+</t> 
+</table> 
+
+<table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 5px;"> 
+<tr> 
+<td style="width: 10%; text-align: center; padding: 5px; border: 1px solid #dee2e6; font-weight: bold; background-color: #f2f2f2;">Art. 15</td> 
+<td style="width: 90%; text-align: left; padding: 5px; border: 1px solid #dee2e6; font-weight: bold;">Adquisición de bienes y servicios u obras.</td> 
+</tr> 
+</table>
+
+<table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+<t t-foreach="fields_list_3[:5]" t-as="field">
+<tr>
+<td style="width: 5%; text-align: center; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field_index + 28"/></td>
+<td style="width: 75%; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field[1]"/></td>
+<td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+<t t-if="control[field[0]] == 'cumple'">X</t>
+</td>
+<td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+<t t-if="control[field[0]] == 'no_cumple'">X</t>
+</td>
+<td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+<t t-if="control[field[0]] == 'no_aplica'">X</t>
+</td>
+</tr>
+</t>
+</table>
+
+<table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 5px;">
+<tr>
+<td style="width: 10%; text-align: center; padding: 5px; border: 1px solid #dee2e6; font-weight: bold; background-color: #f2f2f2;">Art. 18</td>
+<td style="width: 90%; text-align: left; padding: 5px; border: 1px solid #dee2e6; font-weight: bold;">La Entidad que reciba financiamiento de la UEP - SND, deberá aplicar las siguientes reglas de visibilidad de financiamiento:</td>
+</tr>
+</table>
+
+<table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+<t t-foreach="fields_list_3[5:6]" t-as="field">
+<tr>
+<td style="width: 5%; text-align: center; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field_index + 33"/></td>
+<td style="width: 75%; padding: 5px; border: 1px solid #dee2e6;"><t t-esc="field[1]"/></td>
+<td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+<t t-if="control[field[0]] == 'cumple'">X</t>
+</td>
+<td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+<t t-if="control[field[0]] == 'no_cumple'">X</t>
+</td>
+<td style="width: 6.66%; text-align: center; padding: 5px; border: 1px solid #dee2e6;">
+<t t-if="control[field[0]] == 'no_aplica'">X</t>
+</td>
+</tr>
+</t>
+</table>
+
+<!-- Observaciones -->
+<div style="margin-top: 20px;">
+<table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+<tr>
+<td style="border: 1px solid #dee2e6; background-color: #f2f2f2; padding: 5px; font-weight: bold;">OBSERVACIONES:</td>
+</tr>
+<tr>
+<td style="border: 1px solid #dee2e6; padding: 10px; min-height: 80px;">
+<t t-esc="control.observaciones or ''"/>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- DESTINO -->
+<div style="margin-top: 20px;">
+<table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+<tr>
+<td style="border: 1px solid #dee2e6; background-color: #f2f2f2; padding: 5px; font-weight: bold;">DESTINO:</td>
+</tr>
+<tr>
+<td style="border: 1px solid #dee2e6; padding: 10px;">
+<table style="width: 100%;">
+<tr>
+<td style="width: 5%; text-align: center; border: 1px solid #dee2e6;">X</td>
+<td style="width: 95%; padding-left: 10px;"><t t-esc="doc.destino or ''"/></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- Signatures -->
+<div style="margin-top: 30px;">
+<table style="width: 100%; border-collapse: collapse;">
+<tr>
+<td style="width: 50%; padding: 10px;">
+<div>
+<p>Elaborado por:</p>
+</div>
+<div style="margin-top: 60px; border-top: 1px solid black; width: 80%;">
+<p>Fecha: ____/____/____</p>
+</div>
+</td>
+<td style="width: 50%; padding: 10px; text-align: right;">
+<div>
+<p>V° B° Coordinación Financiera</p>
+</div>
+<div style="margin-top: 60px; border-top: 1px solid black; width: 80%; margin-left: auto;">
+<p>FIRMA Y ACLARACIÓN</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+                    </div>    
+                </t>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
+
+                        

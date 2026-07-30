@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_proveedor,project_proveedor,model_project_proveedor,base.group_user,1,1,1,1
+acessaccess_project_proveedor_producto,project_proveedor_producto,model_project_proveedor_producto,base.group_user,1,1,1,1
+access__project_juridica,access_project_juridica,model_project_juridica,base.group_user,1,1,1,1
+access_project_pagos,access_project_pagos,model_project_pagos,base.group_user,1,1,1,1
+access_project_objeto_gasto,access_project_objeto_gasto,model_project_objeto_gasto,base.group_user,1,1,1,1
