@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_gestion_operacional,access_gestion_operacional,model_gestion_operacional,base.group_user,1,1,1,1
-access_gestion_operacional_line,access_gestion_operacional_line,model_gestion_operacional_line,base.group_user,1,1,1,1
-access_gestion_operacional_logo,access_gestion_operacional_logo,model_gestion_operacional_logo,base.group_user,1,1,1,1
-access_gestion_operacional_documento,access_gestion_operacional_documento,model_gestion_operacional_documento,base.group_user,1,1,1,1
-access_gestion_control_839_user,Acceso a Control OG 839 para Usuario,model_gestion_control_839,base.group_user,1,1,1,1
-access_gestion_control_879_user,Acceso a Control OG 879 para Usuario,model_gestion_control_879,base.group_user,1,1,1,1
