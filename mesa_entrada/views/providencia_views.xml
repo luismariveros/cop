@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Vista de árbol para Providencias -->
-    <record id="view_eterp_providencia_tree" model="ir.ui.view">
-        <field name="name">eterp.providencia.tree</field>
-        <field name="model">eterp.providencia</field>
+    <record id="view_providencia_tree" model="ir.ui.view">
+        <field name="name">providencia.tree</field>
+        <field name="model">providencia</field>
         <field name="arch" type="xml">
-            <tree string="Providencias" editable="bottom">
+            <list string="Providencias" editable="bottom">
                 <field name="nombre"/>
                 <field name="codigo"/>
                 <field name="descripcion"/>
                 <field name="activo"/>
-            </tree>
+            </list>
         </field>
     </record>
 
     <!-- Vista de formulario para Providencias -->
-    <record id="view_eterp_providencia_form" model="ir.ui.view">
-        <field name="name">eterp.providencia.form</field>
-        <field name="model">eterp.providencia</field>
+    <record id="view_providencia_form" model="ir.ui.view">
+        <field name="name">providencia.form</field>
+        <field name="model">providencia</field>
         <field name="arch" type="xml">
             <form string="Providencia">
                 <sheet>
@@ -39,10 +39,10 @@
     </record>
 
     <!-- Acción de Ventana para Providencias -->
-    <record id="action_eterp_providencia" model="ir.actions.act_window">
+    <record id="action_providencia" model="ir.actions.act_window">
         <field name="name">Providencias</field>
-        <field name="res_model">eterp.providencia</field>
-        <field name="view_mode">tree,form</field>
+        <field name="res_model">providencia</field>
+        <field name="view_mode">list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Crear una nueva Providencia

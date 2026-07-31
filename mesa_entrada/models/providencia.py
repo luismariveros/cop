@@ -2,7 +2,7 @@ from odoo import models, fields, api
 
 
 class Providencia(models.Model):
-    _name = "eterp.providencia"
+    _name = "providencia"
     _description = "Providencias"
     _rec_name = "nombre"
 

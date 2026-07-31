@@ -237,21 +237,6 @@
         </field>
     </record>
 
-    <!-- Redefinir la acción principal para usar esta vista -->
-    <record id="action_mesa_entrada_expediente" model="ir.actions.act_window">
-        <field name="name">Expedientes</field>
-        <field name="res_model">mesa.entrada.expediente</field>
-        <field name="view_mode">list,form</field>
-        <field name="view_id" ref="view_mesa_entrada_expediente_tree"/>
-        <field name="search_view_id" ref="view_mesa_entrada_expediente_search"/>
-        <field name="help" type="html">
-        <field name="default_order">fecha_creacion desc</field>
-            <p class="o_view_nocontent_smiling_face">
-                Crear un nuevo Expediente de Mesa de Entrada
-            </p>
-        </field>
-        <field name="context">{'form_view_ref': 'mesa_entrada.view_mesa_entrada_expediente_form_improved'}</field>
-    </record>
 
 
     <!-- Vista de búsqueda para Expedientes -->
@@ -327,7 +312,7 @@
         <field name="name">mesa.entrada.documento.tree</field>
         <field name="model">mesa.entrada.documento</field>
         <field name="arch" type="xml">
-            <tree string="Documentos">
+            <list string="Documentos">
                 <field name="nombre"/>
                 <field name="nombre_archivo"/>
                 <field name="tipo_documento"/>
@@ -337,7 +322,7 @@
                         type="object" 
                         icon="fa-eye" 
                         string="Ver Documento"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -426,7 +411,7 @@
     <record id="action_historial_departamento" model="ir.actions.act_window">
         <field name="name">Historial Departamental</field>
         <field name="res_model">historial.departamento</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Revisar Historial Departamental
@@ -434,5 +419,20 @@
         </field>
     </record>
 
+     <!-- Redefinir la acción principal para usar esta vista -->
+    <record id="action_mesa_entrada_expediente" model="ir.actions.act_window">
+        <field name="name">Expedientes</field>
+        <field name="res_model">mesa.entrada.expediente</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_mesa_entrada_expediente_tree"/>
+        <field name="search_view_id" ref="view_mesa_entrada_expediente_search"/>
+        <field name="help" type="html">
+        <field name="default_order">fecha_creacion desc</field>
+            <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo Expediente de Mesa de Entrada
+            </p>
+        </field>
+        <field name="context">{'form_view_ref': 'mesa_entrada.view_mesa_entrada_expediente_form_improved'}</field>
+    </record>
 
 </odoo>

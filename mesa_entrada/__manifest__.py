@@ -36,11 +36,6 @@ Funcionalidades:
         "views/wizard_asignacion_views.xml",
         "views/menu_views.xml",
     ],
-
-    "demo": [
-        "demo/demo.xml",
-    ],
-
     "installable": True,
     "application": True,
     "auto_install": False,

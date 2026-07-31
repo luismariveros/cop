@@ -3,7 +3,7 @@ import json
 
 
 class ExpedienteDetailsWizard(models.TransientModel):
-    _name = "eterp.expediente.details.wizard"
+    _name = "expediente.details.wizard"
     _description = "Detalles de Expediente"
 
     expediente_id = fields.Many2one(
@@ -26,7 +26,7 @@ class ExpedienteDetailsWizard(models.TransientModel):
 
     # Campos para el historial
     historial_ids = fields.One2many(
-        "eterp.expediente.details.historial", "wizard_id", string="Historial"
+        "expediente.details.historial", "wizard_id", string="Historial"
     )
 
     # Flag para controlar la visualización del historial
@@ -79,12 +79,12 @@ class ExpedienteDetailsWizard(models.TransientModel):
 
 
 class ExpedienteDetailsHistorial(models.TransientModel):
-    _name = "eterp.expediente.details.historial"
+    _name = "expediente.details.historial"
     _description = "Línea de Historial de Expediente"
     _order = "fecha desc"
 
     wizard_id = fields.Many2one(
-        "eterp.expediente.details.wizard", string="Wizard", ondelete="cascade"
+        "expediente.details.wizard", string="Wizard", ondelete="cascade"
     )
     fecha = fields.Date(string="Fecha")
     accion = fields.Char(string="Acción")

@@ -62,7 +62,7 @@ class MesaEntradaExpediente(models.Model):
     )
 
     tipo_documento = fields.Many2one(
-        "eterp.tipo.documento",
+        "tipo.documento",
         string="Tipo de Documento",
         tracking=True,
     )
@@ -73,7 +73,7 @@ class MesaEntradaExpediente(models.Model):
     )
 
     providencia = fields.Many2one(
-        "eterp.providencia",
+        "providencia",
         string="Providencia",
         tracking=True,
     )
@@ -817,7 +817,7 @@ class MesaEntradaExpediente(models.Model):
         return {
             "name": "Asignar a Empleado",
             "type": "ir.actions.act_window",
-            "res_model": "eterp.mesa.entrada.asignar.empleado.wizard",
+            "res_model": "mesa.entrada.asignar.empleado.wizard",
             "view_mode": "form",
             "target": "new",
             "context": {"default_expediente_id": self.id},
@@ -862,7 +862,7 @@ class MesaEntradaExpediente(models.Model):
         return {
             "name": "Asignar a Departamento",
             "type": "ir.actions.act_window",
-            "res_model": "eterp.mesa.entrada.asignar.departamento.wizard",
+            "res_model": "mesa.entrada.asignar.departamento.wizard",
             "view_mode": "form",
             "target": "new",
             "context": {"default_expediente_id": self.id},
@@ -950,13 +950,13 @@ class MesaEntradaExpediente(models.Model):
 
         # Obtener referencia a la vista
         view_id = self.env.ref(
-            "eterp_mesa_entrada_16.view_expediente_details_wizard_form"
+            "mesa_entrada.view_expediente_details_wizard_form"
         ).id
 
         return {
             "name": f"Detalles de Expediente {self.name}",
             "type": "ir.actions.act_window",
-            "res_model": "eterp.expediente.details.wizard",
+            "res_model": "expediente.details.wizard",
             "view_mode": "form",
             "view_id": view_id,
             "target": "new",

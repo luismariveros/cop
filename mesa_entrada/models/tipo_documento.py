@@ -2,7 +2,7 @@ from odoo import models, fields, api
 
 
 class TipoDocumento(models.Model):
-    _name = "eterp.tipo.documento"
+    _name = "tipo.documento"
     _description = "Tipos de Documento"
     _rec_name = "nombre"
 

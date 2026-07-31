@@ -53,7 +53,7 @@ class MesaEntradaExpediente(models.Model):
 
             # Verificar permisos de grupos
             record.check_group_permissions(
-                ["eterp_mesa_entrada_16.group_mesa_entrada"],
+                ["mesa_entrada.group_mesa_entrada"],
                 "Solo el personal de Mesa de Entrada puede enviar expedientes a D.A.F.",
             )
 
@@ -107,7 +107,7 @@ class MesaEntradaExpediente(models.Model):
 
             # Verificar permisos de grupos
             record.check_group_permissions(
-                ["eterp_mesa_entrada_16.group_daf"],
+                ["mesa_entrada.group_daf"],
                 "Solo el personal de D.A.F. puede realizar esta acción",
             )
 
@@ -132,8 +132,8 @@ class MesaEntradaExpediente(models.Model):
             # Verificar permisos de grupos
             record.check_group_permissions(
                 [
-                    "eterp_mesa_entrada_16.group_mesa_entrada",
-                    "eterp_mesa_entrada_16.group_daf",
+                    "mesa_entrada.group_mesa_entrada",
+                    "mesa_entrada.group_daf",
                 ],
                 "Solo el personal de Mesa de Entrada o D.A.F. puede completar expedientes",
             )
@@ -158,8 +158,8 @@ class MesaEntradaExpediente(models.Model):
             # Verificar permisos de grupos
             record.check_group_permissions(
                 [
-                    "eterp_mesa_entrada_16.group_mesa_entrada",
-                    "eterp_mesa_entrada_16.group_daf",
+                    "mesa_entrada.group_mesa_entrada",
+                    "mesa_entrada.group_daf",
                 ],
                 "Solo el personal de Mesa de Entrada o D.A.F. puede cancelar expedientes",
             )
@@ -184,8 +184,8 @@ class MesaEntradaExpediente(models.Model):
             # Verificar permisos de grupos
             record.check_group_permissions(
                 [
-                    "eterp_mesa_entrada_16.group_mesa_entrada",
-                    "eterp_mesa_entrada_16.group_daf",
+                    "mesa_entrada.group_mesa_entrada",
+                    "mesa_entrada.group_daf",
                 ],
                 "Solo el personal de Mesa de Entrada o D.A.F. puede reabrir expedientes",
             )

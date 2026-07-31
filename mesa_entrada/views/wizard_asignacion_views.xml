@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Asistente para asignar empleado -->
-    <record id="view_eterp_mesa_entrada_asignar_empleado_wizard_form" model="ir.ui.view">
-        <field name="name">eterp.mesa.entrada.asignar.empleado.wizard.form</field>
-        <field name="model">eterp.mesa.entrada.asignar.empleado.wizard</field>
+    <record id="view_mesa_entrada_asignar_empleado_wizard_form" model="ir.ui.view">
+        <field name="name">mesa.entrada.asignar.empleado.wizard.form</field>
+        <field name="model">mesa.entrada.asignar.empleado.wizard</field>
         <field name="arch" type="xml">
             <form string="Asignar a Empleado">
                 <sheet>
@@ -21,19 +21,19 @@
         </field>
     </record>
 
-    <record id="action_eterp_mesa_entrada_asignar_empleado_wizard" model="ir.actions.act_window">
+    <record id="action_mesa_entrada_asignar_empleado_wizard" model="ir.actions.act_window">
         <field name="name">Asignar a Empleado</field>
-        <field name="res_model">eterp.mesa.entrada.asignar.empleado.wizard</field>
+        <field name="res_model">mesa.entrada.asignar.empleado.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="binding_model_id" ref="model_eterp_mesa_entrada_expediente"/>
+        <field name="binding_model_id" ref="model_mesa_entrada_expediente"/>
         <field name="binding_view_types">form</field>
     </record>
 
     <!-- Asistente para asignar departamento -->
-    <record id="view_eterp_mesa_entrada_asignar_departamento_wizard_form" model="ir.ui.view">
-        <field name="name">eterp.mesa.entrada.asignar.departamento.wizard.form</field>
-        <field name="model">eterp.mesa.entrada.asignar.departamento.wizard</field>
+    <record id="view_mesa_entrada_asignar_departamento_wizard_form" model="ir.ui.view">
+        <field name="name">mesa.entrada.asignar.departamento.wizard.form</field>
+        <field name="model">mesa.entrada.asignar.departamento.wizard</field>
         <field name="arch" type="xml">
             <form string="Asignar a Departamento">
                 <sheet>
@@ -51,44 +51,44 @@
         </field>
     </record>
 
-    <record id="action_eterp_mesa_entrada_asignar_departamento_wizard" model="ir.actions.act_window">
+    <record id="action_mesa_entrada_asignar_departamento_wizard" model="ir.actions.act_window">
         <field name="name">Asignar a Departamento</field>
-        <field name="res_model">eterp.mesa.entrada.asignar.departamento.wizard</field>
+        <field name="res_model">mesa.entrada.asignar.departamento.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="binding_model_id" ref="model_eterp_mesa_entrada_expediente"/>
+        <field name="binding_model_id" ref="model_mesa_entrada_expediente"/>
         <field name="binding_view_types">form</field>
     </record>
 
 
     <record id="view_expediente_details_wizard_form" model="ir.ui.view">
-        <field name="name">eterp.expediente.details.wizard.form</field>
-        <field name="model">eterp.expediente.details.wizard</field>
+        <field name="name">expediente.details.wizard.form</field>
+        <field name="model">expediente.details.wizard</field>
         <field name="arch" type="xml">
-        <style>
-                .o_expediente_details .badge {
-                    font-size: 1rem !important;
-                }
-                .o_expediente_details .card {
-                    transition: all 0.3s;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                    border: none;
-                }
-                .o_expediente_details .card:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-                }
-                .o_expediente_details .o_horizontal_separator {
-                    color: #7c7bad;
-                    font-size: 1.1rem;
-                }
-                .o_expediente_details .o_list_view {
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-                    border-radius: 8px;
-                    overflow: hidden;
-                }
-            </style>
+<!--        <style>-->
+<!--                .o_expediente_details .badge {-->
+<!--                    font-size: 1rem !important;-->
+<!--                }-->
+<!--                .o_expediente_details .card {-->
+<!--                    transition: all 0.3s;-->
+<!--                    border-radius: 8px;-->
+<!--                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);-->
+<!--                    border: none;-->
+<!--                }-->
+<!--                .o_expediente_details .card:hover {-->
+<!--                    transform: translateY(-5px);-->
+<!--                    box-shadow: 0 8px 15px rgba(0,0,0,0.1);-->
+<!--                }-->
+<!--                .o_expediente_details .o_horizontal_separator {-->
+<!--                    color: #7c7bad;-->
+<!--                    font-size: 1.1rem;-->
+<!--                }-->
+<!--                .o_expediente_details .o_list_view {-->
+<!--                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);-->
+<!--                    border-radius: 8px;-->
+<!--                    overflow: hidden;-->
+<!--                }-->
+<!--            </style>-->
             <form string="Detalles de Expediente" class="o_expediente_details">
                 <sheet>
                     <div class="oe_title">
@@ -110,7 +110,7 @@
                         
                         <!-- Primera fila de tarjetas -->
                         <div class="row mb-4">
-                            <div class="col-12 col-md-4" attrs="{'invisible': [('info_adicional', '=', False)]}">
+                            <div class="col-12 col-md-4" invisible="not info_adicional" >
                                 <div class="card h-100">
                                     <div class="card-body text-center">
                                         <h5 class="card-title text-muted mb-3">
@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             
-                            <div class="col-12 col-md-4" attrs="{'invisible': [('departamento_actual', '=', False)]}">
+                            <div class="col-12 col-md-4" invisible="not departamento_actual">
                                 <div class="card h-100">
                                     <div class="card-body text-center">
                                         <h5 class="card-title text-muted mb-3">
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                             
-                            <div class="col-12 col-md-4" attrs="{'invisible': [('destinatario', '=', False)]}">
+                            <div class="col-12 col-md-4" invisible="not destinatario">
                                 <div class="card h-100">
                                     <div class="card-body text-center">
                                         <h5 class="card-title text-muted mb-3">
@@ -145,7 +145,7 @@
                                         <p class="card-text fw-bold">
                                             <field name="destinatario" readonly="1" nolabel="1"/>
                                         </p>
-                                        <p class="card-text text-muted" attrs="{'invisible': [('dept_destinatario', '=', False)]}">
+                                        <p class="card-text text-muted" invisible="not dept_destinatario">
                                             <small><field name="dept_destinatario" readonly="1" nolabel="1"/></small>
                                         </p>
                                     </div>
@@ -155,7 +155,7 @@
                         
                         <!-- Segunda fila de tarjetas - Información de recepción -->
                         <div class="row mb-4">
-                            <div class="col-12 col-md-6" attrs="{'invisible': [('quien_recibe', '=', False)]}">
+                            <div class="col-12 col-md-6" invisible="not quien_recibe" >
                                 <div class="card h-100">
                                     <div class="card-body text-center">
                                         <h5 class="card-title text-muted mb-3">
@@ -168,7 +168,7 @@
                                 </div>
                             </div>
                             
-                            <div class="col-12 col-md-6" attrs="{'invisible': [('fecha_hora_recepcion', '=', False)]}">
+                            <div class="col-12 col-md-6" invisible="not fecha_hora_recepcion">
                                 <div class="card h-100">
                                     <div class="card-body text-center">
                                         <h5 class="card-title text-muted mb-3">
@@ -184,23 +184,23 @@
                     </div>
                     
                     <!-- Sección de historial con verificación de tiene_historial -->
-                    <div class="o_group" attrs="{'invisible': [('tiene_historial', '=', False)]}">
+                    <div class="o_group" invisible="not tiene_historial" >
                         <div class="o_horizontal_separator mb-3 text-uppercase fw-bolder">
                             Últimos Movimientos
                         </div>
                         
                         <field name="tiene_historial" invisible="1"/>
-                        <field name="historial_ids" readonly="1">
-                            <tree decoration-info="1==1" create="0" delete="0" editable="0">
-                                <field name="fecha"/>
-                                <field name="accion"/>
-                                <field name="departamento"/>
-                            </tree>
-                        </field>
+                       <field name="historial_ids" readonly="1">
+    <list decoration-info="1 == 1" create="0" delete="0">
+        <field name="fecha"/>
+        <field name="accion"/>
+        <field name="departamento"/>
+    </list>
+</field>
                     </div>
                     
                     <!-- Mensaje si no hay historial -->
-                    <div class="alert alert-info" role="alert" attrs="{'invisible': [('tiene_historial', '=', True)]}">
+                    <div class="alert alert-info" role="alert" invisible="tiene_historial" >
                         <i class="fa fa-info-circle"></i> No hay movimientos registrados para este expediente.
                     </div>
                 </sheet>

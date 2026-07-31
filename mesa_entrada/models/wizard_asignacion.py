@@ -3,7 +3,7 @@ from odoo.exceptions import ValidationError
 
 
 class AsignarEmpleadoWizard(models.TransientModel):
-    _name = "eterp.mesa.entrada.asignar.empleado.wizard"
+    _name = "mesa.entrada.asignar.empleado.wizard"
     _description = "Asistente para asignar expediente a empleado"
 
     expediente_id = fields.Many2one(
@@ -79,7 +79,7 @@ class AsignarEmpleadoWizard(models.TransientModel):
 
 
 class AsignarDepartamentoWizard(models.TransientModel):
-    _name = "eterp.mesa.entrada.asignar.departamento.wizard"
+    _name = "mesa.entrada.asignar.departamento.wizard"
     _description = "Asistente para asignar expediente a departamento"
 
     expediente_id = fields.Many2one(

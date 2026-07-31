@@ -5,9 +5,9 @@
     <!-- Mesa de Entrada puede hacer todo con los expedientes -->
     <record id="rule_mesa_entrada_expediente_all" model="ir.rule">
         <field name="name">Acceso Mesa de Entrada a Expedientes</field>
-        <field name="model_id" ref="model_eterp_mesa_entrada_expediente"/>
+        <field name="model_id" ref="model_mesa_entrada_expediente"/>
         <field name="domain_force">[(1,'=',1)]</field>
-        <field name="groups" eval="[(4, ref('eterp_mesa_entrada_16.group_mesa_entrada'))]"/>
+        <field name="groups" eval="[(4, ref('mesa_entrada.group_mesa_entrada'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
         <field name="perm_create" eval="True"/>
@@ -17,9 +17,9 @@
     <!-- DAF puede ver todos los expedientes y modificar los que están en revisión -->
     <record id="rule_daf_expediente" model="ir.rule">
         <field name="name">Acceso DAF a Expedientes</field>
-        <field name="model_id" ref="model_eterp_mesa_entrada_expediente"/>
+        <field name="model_id" ref="model_mesa_entrada_expediente"/>
         <field name="domain_force">[(1,'=',1)]</field>
-        <field name="groups" eval="[(4, ref('eterp_mesa_entrada_16.group_daf'))]"/>
+        <field name="groups" eval="[(4, ref('mesa_entrada.group_daf'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
         <field name="perm_create" eval="False"/>
@@ -29,10 +29,10 @@
     <!-- Departamentos solo pueden ver y editar expedientes asignados a su departamento o a ellos -->
     <record id="rule_departamentos_expediente" model="ir.rule">
         <field name="name">Acceso Departamentos a Expedientes</field>
-        <field name="model_id" ref="model_eterp_mesa_entrada_expediente"/>
+        <field name="model_id" ref="model_mesa_entrada_expediente"/>
         <field name="domain_force">['|', ('departamento_actual.id', 'in', [dep.id for dep in user.employee_ids.department_id]), 
                                      ('destinatario.id', 'in', [emp.id for emp in user.employee_ids])]</field>
-        <field name="groups" eval="[(4, ref('eterp_mesa_entrada_16.group_departamentos'))]"/>
+        <field name="groups" eval="[(4, ref('mesa_entrada.group_departamentos'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
         <field name="perm_create" eval="False"/>
