@@ -5,7 +5,7 @@ import os
 
 
 class MesaEntradaExpediente(models.Model):
-    _name = "eterp.mesa.entrada.expediente"
+    _name = "mesa.entrada.expediente"
     _description = "Expediente de Mesa de Entrada"
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _rec_name = "name"  # Campo a usar como nombre de registro
@@ -97,7 +97,7 @@ class MesaEntradaExpediente(models.Model):
     )
 
     historial_departamentos = fields.One2many(
-        "eterp.historial.departamento",
+        "historial.departamento",
         "expediente_id",
         string="Historial de Departamentos",
         readonly=True,
@@ -136,7 +136,7 @@ class MesaEntradaExpediente(models.Model):
 
     # Documentos
     documento_ids = fields.One2many(
-        "eterp.mesa.entrada.documento",
+        "mesa.entrada.documento",
         "expediente_id",
         string="Documentos",
     )
@@ -348,7 +348,7 @@ class MesaEntradaExpediente(models.Model):
         # Generación de número de expediente
         if vals.get("name", "Nuevo") == "Nuevo":
             vals["name"] = (
-                self.env["ir.sequence"].next_by_code("eterp.mesa.entrada.expediente")
+                self.env["ir.sequence"].next_by_code("mesa.entrada.expediente")
                 or "Nuevo"
             )
 
@@ -391,7 +391,7 @@ class MesaEntradaExpediente(models.Model):
             record.state = "to_daf"
 
             # Registro en historial
-            self.env["eterp.historial.departamento"].create(
+            self.env["historial.departamento"].create(
                 {
                     "expediente_id": record.id,
                     "departamento_id": daf_department.id,
@@ -482,7 +482,7 @@ class MesaEntradaExpediente(models.Model):
             record.state = "back_to_mesa"
 
             # Registro en historial
-            self.env["eterp.historial.departamento"].create(
+            self.env["historial.departamento"].create(
                 {
                     "expediente_id": record.id,
                     "departamento_id": mesa_entrada_dept.id,
@@ -545,7 +545,7 @@ class MesaEntradaExpediente(models.Model):
 
             # Registro en historial si el destinatario tiene departamento
             if record.destinatario.department_id:
-                self.env["eterp.historial.departamento"].create(
+                self.env["historial.departamento"].create(
                     {
                         "expediente_id": record.id,
                         "departamento_id": record.destinatario.department_id.id,
@@ -659,7 +659,7 @@ class MesaEntradaExpediente(models.Model):
             record.state = "in_dept"
 
             # Registro en historial
-            self.env["eterp.historial.departamento"].create(
+            self.env["historial.departamento"].create(
                 {
                     "expediente_id": record.id,
                     "departamento_id": record.oficina_destino.id,
@@ -750,7 +750,7 @@ class MesaEntradaExpediente(models.Model):
                 record.departamento_actual = mesa_entrada_dept.id
 
                 # Registro en historial
-                self.env["eterp.historial.departamento"].create(
+                self.env["historial.departamento"].create(
                     {
                         "expediente_id": record.id,
                         "departamento_id": mesa_entrada_dept.id,
@@ -966,12 +966,12 @@ class MesaEntradaExpediente(models.Model):
 
 
 class HistorialDepartamento(models.Model):
-    _name = "eterp.historial.departamento"
+    _name = "historial.departamento"
     _description = "Historial de Departamentos de Expediente"
     _order = "fecha desc, id desc"
 
     expediente_id = fields.Many2one(
-        "eterp.mesa.entrada.expediente",
+        "mesa.entrada.expediente",
         string="Expediente",
         required=True,
         ondelete="cascade",
@@ -1010,11 +1010,11 @@ class HistorialDepartamento(models.Model):
 
 
 class MesaEntradaDocumento(models.Model):
-    _name = "eterp.mesa.entrada.documento"
+    _name = "mesa.entrada.documento"
     _description = "Documentos de Expediente"
 
     expediente_id = fields.Many2one(
-        "eterp.mesa.entrada.expediente",
+        "mesa.entrada.expediente",
         string="Expediente",
         required=True,
         ondelete="cascade",

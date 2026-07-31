@@ -7,7 +7,7 @@ class ExpedienteDetailsWizard(models.TransientModel):
     _description = "Detalles de Expediente"
 
     expediente_id = fields.Many2one(
-        "eterp.mesa.entrada.expediente", string="Expediente", readonly=True
+        "mesa.entrada.expediente", string="Expediente", readonly=True
     )
     nombre = fields.Char(string="Número de Expediente", readonly=True)
     estado_actual = fields.Char(string="Estado Actual", readonly=True)

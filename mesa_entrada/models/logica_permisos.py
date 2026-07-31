@@ -3,7 +3,7 @@ from odoo.exceptions import ValidationError, AccessError
 
 
 class MesaEntradaExpediente(models.Model):
-    _inherit = "eterp.mesa.entrada.expediente"
+    _inherit = "mesa.entrada.expediente"
 
     def check_group_permissions(self, required_groups=None, error_message=None):
         """
@@ -72,7 +72,7 @@ class MesaEntradaExpediente(models.Model):
             record.state = "to_daf"
 
             # Registro en historial
-            self.env["eterp.historial.departamento"].create(
+            self.env["historial.departamento"].create(
                 {
                     "expediente_id": record.id,
                     "departamento_id": daf_department.id,
@@ -201,7 +201,7 @@ class MesaEntradaExpediente(models.Model):
                 record.departamento_actual = mesa_entrada_dept.id
 
                 # Registro en historial
-                self.env["eterp.historial.departamento"].create(
+                self.env["historial.departamento"].create(
                     {
                         "expediente_id": record.id,
                         "departamento_id": mesa_entrada_dept.id,

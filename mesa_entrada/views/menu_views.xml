@@ -5,68 +5,68 @@
         id="menu_mesa_entrada_root"
         name="Mesa de Entrada"
         sequence="10"
-        web_icon="mesa_entrada_16,static/description/mesa_entrada.png"/>
+        web_icon="mesa_entrada,static/description/mesa_entrada.png"/>
 
     <!-- Menú de Expedientes -->
     <menuitem 
         id="menu_mesa_entrada_expediente"
         name="Expedientes"
         parent="menu_mesa_entrada_root"
-        action="action_eterp_mesa_entrada_expediente"
+        action="action_mesa_entrada_expediente"
         sequence="10"/>
         
     <!-- Menú de Expedientes en DAF -->
     <menuitem 
-        id="menu_eterp_mesa_entrada_expediente_daf"
+        id="menu_mesa_entrada_expediente_daf"
         name="Expedientes en D.A.F."
-        parent="menu_eterp_mesa_entrada_root"
-        action="action_eterp_mesa_entrada_expediente_daf"
+        parent="menu_mesa_entrada_root"
+        action="action_mesa_entrada_expediente_daf"
         sequence="20"/>
         
     <!-- Menú de Expedientes en Mesa de Entrada -->
     <menuitem 
-        id="menu_eterp_mesa_entrada_expediente_mesa"
+        id="menu_mesa_entrada_expediente_mesa"
         name="Exp. en Mesa de Entrada"
-        parent="menu_eterp_mesa_entrada_root"
-        action="action_eterp_mesa_entrada_expediente_mesa"
+        parent="menu_mesa_entrada_root"
+        action="action_mesa_entrada_expediente_mesa"
         sequence="30"/>
         
     <!-- Menú de Expedientes por Departamento -->
     <menuitem 
-        id="menu_eterp_mesa_entrada_expediente_by_dept"
+        id="menu_mesa_entrada_expediente_by_dept"
         name="Exp. por Departamento"
-        parent="menu_eterp_mesa_entrada_root"
-        action="action_eterp_mesa_entrada_expediente_by_dept"
+        parent="menu_mesa_entrada_root"
+        action="action_mesa_entrada_expediente_by_dept"
         sequence="40"/>
         
     <!-- Menú de Historial -->
     <menuitem 
-        id="menu_eterp_mesa_entrada_historial"
+        id="menu_mesa_entrada_historial"
         name="Historial Departamental"
-        parent="menu_eterp_mesa_entrada_root"
-        action="action_eterp_historial_departamento"
+        parent="menu_mesa_entrada_root"
+        action="action_historial_departamento"
         sequence="50"/>
 
     <!-- Menú de Configuraciones -->
     <menuitem 
-        id="menu_eterp_mesa_entrada_configuraciones"
+        id="menu_mesa_entrada_configuraciones"
         name="Configuraciones"
-        parent="menu_eterp_mesa_entrada_root"
+        parent="menu_mesa_entrada_root"
         sequence="90"/>
 
     <!-- Submenú de Tipos de Documento en Configuraciones -->
     <menuitem 
-        id="menu_eterp_tipo_documento"
+        id="menu_tipo_documento"
         name="Tipos de Documento"
-        parent="menu_eterp_mesa_entrada_configuraciones"
-        action="action_eterp_tipo_documento"
+        parent="menu_mesa_entrada_configuraciones"
+        action="action_tipo_documento"
         sequence="10"/>
 
     <!-- Submenú de Providencias en Configuraciones -->
     <menuitem 
-        id="menu_eterp_providencia"
+        id="menu_providencia"
         name="Providencias"
-        parent="menu_eterp_mesa_entrada_configuraciones"
-        action="action_eterp_providencia"
+        parent="menu_mesa_entrada_configuraciones"
+        action="action_providencia"
         sequence="20"/>
 </odoo>

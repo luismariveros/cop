@@ -2,9 +2,9 @@
 <odoo>
 
     <!-- Vista de formulario mejorada para Expedientes con permisos basados en grupos -->
-    <record id="view_eterp_mesa_entrada_expediente_form_improved" model="ir.ui.view">
-        <field name="name">eterp.mesa.entrada.expediente.form.improved</field>
-        <field name="model">eterp.mesa.entrada.expediente</field>
+    <record id="view_mesa_entrada_expediente_form_improved" model="ir.ui.view">
+        <field name="name">mesa.entrada.expediente.form.improved</field>
+        <field name="model">mesa.entrada.expediente</field>
         <field name="arch" type="xml">
             <form string="Expediente">
                 <header>
@@ -13,79 +13,89 @@
                             string="Enviar a D.A.F." 
                             type="object" 
                             class="oe_highlight"
-                            groups="eterp_mesa_entrada_16.group_mesa_entrada"
-                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                            groups="mesa_entrada.group_mesa_entrada"
+                            invisible = "state != 'draft'"
+                           />
                     
                     <!-- DAF recibe y revisa (solo DAF) -->
                     <button name="action_daf_review" 
                             string="Revisar Expediente" 
                             type="object" 
                             class="oe_highlight"
-                            groups="eterp_mesa_entrada_16.group_daf"
-                            attrs="{'invisible': [('state', '!=', 'to_daf')]}"/>
+                            groups="mesa_entrada.group_daf"
+                             invisible = "state != 'to_daf'"
+                            />
                     
                     <!-- DAF devuelve a Mesa de Entrada (solo DAF) -->
                     <button name="action_return_to_mesa" 
                             string="Devolver a Mesa de Entrada" 
                             type="object" 
                             class="oe_highlight"
-                            groups="eterp_mesa_entrada_16.group_daf"
-                            attrs="{'invisible': [('state', '!=', 'in_daf_review')]}"/>
+                            groups="mesa_entrada.group_daf"
+                            invisible = "state != 'in_daf_review'"
+                           />
                     
                     <!-- Mesa de Entrada asigna a empleado (solo Mesa de Entrada) -->
                     <button name="action_open_asignar_empleado_wizard" 
                             string="Asignar a Empleado" 
                             type="object" 
                             class="oe_highlight"
-                            groups="eterp_mesa_entrada_16.group_mesa_entrada"
-                            attrs="{'invisible': [('state', '!=', 'back_to_mesa')]}"/>
+                            groups="mesa_entrada.group_mesa_entrada"
+                            invisible = "state != 'back_to_mesa'"
+                           />
                     
                     <!-- Empleado recibe expediente (disponible para todos, pero solo visible en estado 'assigned') -->
                     <button name="action_receive_expediente" 
                             string="Recibir Expediente" 
                             type="object" 
                             class="oe_highlight"
-                            attrs="{'invisible': [('state', '!=', 'assigned')]}"/>
+                            invisible = "state != 'assigned'"
+                    />
                     
                     <!-- Asignar a departamento (Mesa de Entrada, DAF y Empleados con el expediente) -->
                     <button name="action_open_asignar_departamento_wizard" 
                             string="Asignar a Departamento" 
                             type="object" 
                             class="oe_highlight"
-                            groups="eterp_mesa_entrada_16.group_mesa_entrada,eterp_mesa_entrada_16.group_daf,eterp_mesa_entrada_16.group_departamentos"
-                            attrs="{'invisible': [('state', 'not in', ['in_progress', 'back_to_mesa', 'in_dept'])]}"/>
+                            groups="mesa_entrada.group_mesa_entrada,mesa_entrada.group_daf,mesa_entrada.group_departamentos"
+                            invisible="state not in ['in_progress', 'back_to_mesa', 'in_dept']"
+                            />
                     
                     <!-- Retornar a Mesa de Entrada (todos pueden devolver desde su departamento) -->
                     <button name="action_return_to_mesa" 
                             string="Devolver a Mesa de Entrada" 
                             type="object" 
                             class="oe_highlight"
-                            groups="eterp_mesa_entrada_16.group_departamentos"
-                            attrs="{'invisible': [('state', 'not in', ['in_progress', 'in_dept'])]}"/>
+                            groups="mesa_entrada.group_departamentos"
+                            invisible="state not in  ['in_progress', 'in_dept']"
+                            />
                     
                     <!-- Completar Expediente (solo Mesa de Entrada y DAF) -->
                     <button name="action_complete_expediente" 
                             string="Completar Expediente" 
                             type="object" 
                             class="oe_highlight"
-                            groups="eterp_mesa_entrada_16.group_mesa_entrada,eterp_mesa_entrada_16.group_daf"
-                            attrs="{'invisible': [('state', 'not in', ['back_to_mesa', 'in_progress', 'in_dept'])]}"/>
+                            groups="mesa_entrada.group_mesa_entrada,mesa_entrada.group_daf"
+                            invisible="state not in  ['back_to_mesa', 'in_progress', 'in_dept']"
+                            />
                     
                     <!-- Cancelar Expediente (solo Mesa de Entrada y DAF) -->
                     <button name="action_cancel_expediente" 
                             string="Cancelar Expediente" 
                             type="object" 
                             class="oe_cancel"
-                            groups="eterp_mesa_entrada_16.group_mesa_entrada,eterp_mesa_entrada_16.group_daf"
-                            attrs="{'invisible': [('state', 'in', ['done', 'cancelled'])]}"/>
+                            groups="mesa_entrada.group_mesa_entrada,mesa_entrada.group_daf"
+                            invisible="state not in  ['done', 'cancelled']"
+                            />
                     
                     <!-- Reabrir Expediente (solo Mesa de Entrada y DAF) -->
                     <button name="action_reopen_expediente" 
                             string="Reabrir Expediente" 
                             type="object" 
                             class="oe_highlight"
-                            groups="eterp_mesa_entrada_16.group_mesa_entrada,eterp_mesa_entrada_16.group_daf"
-                            attrs="{'invisible': [('state', 'not in', ['done', 'cancelled'])]}"/>
+                            groups="mesa_entrada.group_mesa_entrada,mesa_entrada.group_daf"
+                            invisible="state not in  ['done', 'cancelled']"
+                           />
                     
                     <field name="state" widget="statusbar" 
                            statusbar_visible="draft,to_daf,in_daf_review,back_to_mesa,assigned,in_progress,in_dept,done"/>
@@ -98,61 +108,56 @@
                     </div>
                     
                     <!-- Estado detallado con alertas informativas -->
-                    <div class="alert alert-info" role="status" attrs="{'invisible': [('state', '!=', 'assigned')]}">
+                    <div class="alert alert-info" role="status" invisble="state != 'assigned'">
                         <strong>Asignado a: </strong><field name="destinatario" readonly="1" nolabel="1" options="{'no_open': True}"/>
                     </div>
                     
-                    <div class="alert alert-info" role="status" attrs="{'invisible': [('state', '!=', 'in_dept')]}">
+                    <div class="alert alert-info" role="status" invisble="state != 'in_dept'">
                         <strong>En departamento: </strong><field name="departamento_actual" readonly="1" nolabel="1" options="{'no_open': True}"/>
                     </div>
                     
-                    <div class="alert alert-info" role="status" attrs="{'invisible': [('state', '!=', 'to_daf')]}">
+                    <div class="alert alert-info" role="status" invisble="state != 'to_daf'">
                         <strong>Pendiente de revisión por D.A.F. </strong>
                     </div>
                     
-                    <div class="alert alert-info" role="status" attrs="{'invisible': [('state', '!=', 'in_daf_review')]}">
+                    <div class="alert alert-info" role="status" invisble="state != 'in_daf_review'">
                         <strong>En revisión por D.A.F. </strong>
                     </div>
                     
-                    <div class="alert alert-info" role="status" attrs="{'invisible': [('state', '!=', 'back_to_mesa')]}">
+                    <div class="alert alert-info" role="status" invisble="state != 'back_to_mesa'">
                         <strong>Devuelto a Mesa de Entrada para asignación </strong>
                     </div>
                     
-                    <div class="alert alert-success" role="status" attrs="{'invisible': [('state', '!=', 'done')]}">
+                    <div class="alert alert-success" role="status" invisble="state != 'done'">
                         <strong>Expediente completado </strong>
                     </div>
                     
-                    <div class="alert alert-danger" role="status" attrs="{'invisible': [('state', '!=', 'cancelled')]}">
+                    <div class="alert alert-danger" role="status" invisble="state != 'cancelled'">
                         <strong>Expediente cancelado </strong>
                     </div>
                     
                     <!-- Mensaje cuando está completado o cancelado -->
-                    <div class="alert alert-warning" role="status" attrs="{'invisible': [('state', 'not in', ['done', 'cancelled'])]}">
+                    <div class="alert alert-warning" role="status"  invisible="state not in  ['done', 'cancelled']">
                         <strong>Expediente finalizado - </strong> Todos los campos están en modo solo lectura
                     </div>
                     
                     <group>
                         <group>
-                            <field name="fecha" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                            <field name="es_externo" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                            <field name="remitente" 
-                                   attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                            <field name="procede" attrs="{'readonly': ['|', ('es_externo', '=', True), ('state', 'in', ['done', 'cancelled'])]}"/>
+                            <field name="fecha"  readonly="state in  ['done', 'cancelled']"/>
+                            <field name="es_externo"  readonly="state in  ['done', 'cancelled']"/>
+                            <field name="remitente" readonly="state in  ['done', 'cancelled']"/>
+                            <field name="procede" readonly="es_externo or state in ['done', 'cancelled']"/>
                             <field name="departamento_actual" readonly="1"/>
                         </group>
                         <group>
-                            <field name="destinatario" 
-                                   domain="[('user_id', '!=', False)]"
-                                  
-                                   attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                            <field name="oficina_destino" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                            <field name="tipo_documento" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                            <field name="referencia" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                            <field name="providencia" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                            <field name="asunto" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                            <field name="fecha_hora_recepcion" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                            <field name="quien_recibe" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-
+                            <field name="destinatario" domain="[('user_id', '!=', False)]" readonly="state in  ['done', 'cancelled']"/>
+                            <field name="oficina_destino" readonly="state in  ['done', 'cancelled']"/>
+                            <field name="tipo_documento" readonly="state in  ['done', 'cancelled']"/>
+                            <field name="referencia" readonly="state in  ['done', 'cancelled']"/>
+                            <field name="providencia" readonly="state in  ['done', 'cancelled']"/>
+                            <field name="asunto" readonly="state in  ['done', 'cancelled']"/>
+                            <field name="fecha_hora_recepcion" readonly="state in  ['done', 'cancelled']"/>
+                            <field name="quien_recibe" readonly="state in  ['done', 'cancelled']"/>
                         </group>
                     </group>
                     <notebook>
@@ -166,13 +171,13 @@
                         </page>
                         <page string="Detalle" name="detalle">
                             <group>
-                                <field name="observacion" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
-                                <field name="cantidad_hojas" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"/>
+                                <field name="observacion" readonly="state in  ['done', 'cancelled']"/>
+                                <field name="cantidad_hojas" readonly="state in  ['done', 'cancelled']"/>
                             </group>
                         </page>
                         <page string="Documentos" name="documentos">
-                            <field name="documento_ids" mode="tree,form" attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}">
-                                <tree>
+                            <field name="documento_ids" mode="list,form" readonly="state in  ['done', 'cancelled']">
+                                <list>
                                     <field name="nombre"/>
                                     <field name="nombre_archivo"/>
                                     <field name="tipo_documento"/>
@@ -181,37 +186,33 @@
                                             type="object" 
                                             icon="fa-eye" 
                                             string="Ver Documento"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page string="Historial Departamental" name="historial">
                             <field name="historial_departamentos" readonly="1">
-                                <tree>
+                                <list>
                                     <field name="fecha"/>
                                     <field name="departamento_id"/>
                                     <field name="accion"/>
                                     <field name="observacion"/>
                                     <field name="usuario_id"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
-                </div>
+                <chatter/>
             </form>
         </field>
     </record>
 
 
-    <record id="view_eterp_mesa_entrada_expediente_tree" model="ir.ui.view">
-        <field name="name">eterp.mesa.entrada.expediente.tree</field>
-        <field name="model">eterp.mesa.entrada.expediente</field>
+    <record id="view_mesa_entrada_expediente_tree" model="ir.ui.view">
+        <field name="name">mesa.entrada.expediente.tree</field>
+        <field name="model">mesa.entrada.expediente</field>
         <field name="arch" type="xml">
-            <tree string="Expedientes" default_order="fecha_creacion desc"
+            <list string="Expedientes" default_order="fecha_creacion desc"
                   decoration-info="state == 'draft'" 
                   decoration-success="state == 'done'"
                   decoration-warning="state == 'assigned' or state == 'to_daf'" 
@@ -229,40 +230,41 @@
                 <button name="action_view_details" 
                         string="Ver Detalles" 
                         type="object" 
-                        icon="fa-info-circle" 
-                        attrs="{'invisible': [('state', 'in', ['draft', 'cancelled'])]}"/>
-            </tree>
+                        icon="fa-info-circle"
+                        invisible="state in  ['draft', 'cancelled']"
+                        />
+            </list>
         </field>
     </record>
 
     <!-- Redefinir la acción principal para usar esta vista -->
-    <record id="action_eterp_mesa_entrada_expediente" model="ir.actions.act_window">
+    <record id="action_mesa_entrada_expediente" model="ir.actions.act_window">
         <field name="name">Expedientes</field>
-        <field name="res_model">eterp.mesa.entrada.expediente</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_eterp_mesa_entrada_expediente_tree"/>
-        <field name="search_view_id" ref="view_eterp_mesa_entrada_expediente_search"/>
+        <field name="res_model">mesa.entrada.expediente</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_mesa_entrada_expediente_tree"/>
+        <field name="search_view_id" ref="view_mesa_entrada_expediente_search"/>
         <field name="help" type="html">
         <field name="default_order">fecha_creacion desc</field>
             <p class="o_view_nocontent_smiling_face">
                 Crear un nuevo Expediente de Mesa de Entrada
             </p>
         </field>
-        <field name="context">{'form_view_ref': 'eterp_mesa_entrada_16.view_eterp_mesa_entrada_expediente_form_improved'}</field>
+        <field name="context">{'form_view_ref': 'mesa_entrada.view_mesa_entrada_expediente_form_improved'}</field>
     </record>
 
 
     <!-- Vista de búsqueda para Expedientes -->
-    <record id="view_eterp_mesa_entrada_expediente_search" model="ir.ui.view">
-        <field name="name">eterp.mesa.entrada.expediente.search</field>
-        <field name="model">eterp.mesa.entrada.expediente</field>
+    <record id="view_mesa_entrada_expediente_search" model="ir.ui.view">
+        <field name="name">mesa.entrada.expediente.search</field>
+        <field name="model">mesa.entrada.expediente</field>
         <field name="arch" type="xml">
             <search string="Buscar Expedientes">
                 <field name="asunto"/>
                 <field name="name"/>
                 <field name="remitente"/>
                 <field name="destinatario"/>
-		<field name="referencia"/>
+		        <field name="referencia"/>
                 <filter string="Mis Expedientes" 
                         domain="[('destinatario.user_id', '=', uid)]" 
                         name="my_expedientes"/>
@@ -276,23 +278,21 @@
                     <filter string="Referencia" 
                             name="group_by_referencia" 
                             context="{'group_by': 'referencia'}"/>
-		</group>
+		        </group>
             </search>
         </field>
     </record>
 
     <!-- Vista de búsqueda para Documentos -->
-    <record id="view_eterp_mesa_entrada_documento_search" model="ir.ui.view">
-        <field name="name">eterp.mesa.entrada.documento.search</field>
-        <field name="model">eterp.mesa.entrada.documento</field>
+    <record id="view_mesa_entrada_documento_search" model="ir.ui.view">
+        <field name="name">mesa.entrada.documento.search</field>
+        <field name="model">mesa.entrada.documento</field>
         <field name="arch" type="xml">
             <search string="Buscar Documentos">
                 <field name="nombre"/>
                 <field name="nombre_archivo"/>
                 <field name="tipo_documento"/>
                 <field name="expediente_id"/>
-		
-
                 <filter string="PDFs" 
                         domain="[('tipo_documento', '=', 'pdf')]" 
                         name="pdf_docs"/>
@@ -308,11 +308,11 @@
         </field>
     </record>
 
-    <record id="action_eterp_mesa_entrada_expediente" model="ir.actions.act_window">
+    <record id="action_mesa_entrada_expediente" model="ir.actions.act_window">
         <field name="name">Expedientes</field>
-        <field name="res_model">eterp.mesa.entrada.expediente</field>
-        <field name="view_mode">tree,form</field>
-        <field name="search_view_id" ref="view_eterp_mesa_entrada_expediente_search"/>
+        <field name="res_model">mesa.entrada.expediente</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_mesa_entrada_expediente_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Crear un nuevo Expediente de Mesa de Entrada
@@ -323,9 +323,9 @@
 
 
     <!-- Vista de documentos independiente -->
-    <record id="view_eterp_mesa_entrada_documento_tree" model="ir.ui.view">
-        <field name="name">eterp.mesa.entrada.documento.tree</field>
-        <field name="model">eterp.mesa.entrada.documento</field>
+    <record id="view_mesa_entrada_documento_tree" model="ir.ui.view">
+        <field name="name">mesa.entrada.documento.tree</field>
+        <field name="model">mesa.entrada.documento</field>
         <field name="arch" type="xml">
             <tree string="Documentos">
                 <field name="nombre"/>
@@ -343,9 +343,9 @@
 
     <!-- Vista de formulario para Documentos -->
     <!-- Vista de formulario para documentos -->
-    <record id="view_eterp_mesa_entrada_documento_form" model="ir.ui.view">
-        <field name="name">eterp.mesa.entrada.documento.form</field>
-        <field name="model">eterp.mesa.entrada.documento</field>
+    <record id="view_mesa_entrada_documento_form" model="ir.ui.view">
+        <field name="name">mesa.entrada.documento.form</field>
+        <field name="model">mesa.entrada.documento</field>
         <field name="arch" type="xml">
             <form string="Documento">
                 <sheet>
@@ -376,10 +376,10 @@
 
 
     <!-- Acciones de Ventana para Documentos -->
-    <record id="action_eterp_mesa_entrada_documento" model="ir.actions.act_window">
+    <record id="action_mesa_entrada_documento" model="ir.actions.act_window">
         <field name="name">Documentos de Expedientes</field>
-        <field name="res_model">eterp.mesa.entrada.documento</field>
-        <field name="view_mode">tree,form</field>
+        <field name="res_model">mesa.entrada.documento</field>
+        <field name="view_mode">list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Agregar un nuevo Documento a un Expediente
@@ -387,10 +387,10 @@
         </field>
     </record>
 
-    <record id="action_eterp_mesa_entrada_expediente_daf" model="ir.actions.act_window">
+    <record id="action_mesa_entrada_expediente_daf" model="ir.actions.act_window">
         <field name="name">Expedientes en Revisión D.A.F.</field>
-        <field name="res_model">eterp.mesa.entrada.expediente</field>
-        <field name="view_mode">tree,form</field>
+        <field name="res_model">mesa.entrada.expediente</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('state', '=', 'in_daf_review')]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -399,10 +399,10 @@
         </field>
     </record>
 
-    <record id="action_eterp_mesa_entrada_expediente_mesa" model="ir.actions.act_window">
+    <record id="action_mesa_entrada_expediente_mesa" model="ir.actions.act_window">
         <field name="name">Expedientes en Mesa de Entrada</field>
-        <field name="res_model">eterp.mesa.entrada.expediente</field>
-        <field name="view_mode">tree,form</field>
+        <field name="res_model">mesa.entrada.expediente</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('state', '=', 'back_to_mesa')]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -411,10 +411,10 @@
         </field>
     </record>
 
-    <record id="action_eterp_mesa_entrada_expediente_by_dept" model="ir.actions.act_window">
+    <record id="action_mesa_entrada_expediente_by_dept" model="ir.actions.act_window">
         <field name="name">Expedientes por Departamento</field>
-        <field name="res_model">eterp.mesa.entrada.expediente</field>
-        <field name="view_mode">tree,form</field>
+        <field name="res_model">mesa.entrada.expediente</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('state', '=', 'in_dept')]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -423,9 +423,9 @@
         </field>
     </record>
 
-    <record id="action_eterp_historial_departamento" model="ir.actions.act_window">
+    <record id="action_historial_departamento" model="ir.actions.act_window">
         <field name="name">Historial Departamental</field>
-        <field name="res_model">eterp.historial.departamento</field>
+        <field name="res_model">historial.departamento</field>
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

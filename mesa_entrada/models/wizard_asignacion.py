@@ -7,7 +7,7 @@ class AsignarEmpleadoWizard(models.TransientModel):
     _description = "Asistente para asignar expediente a empleado"
 
     expediente_id = fields.Many2one(
-        "eterp.mesa.entrada.expediente",
+        "mesa.entrada.expediente",
         string="Expediente",
         default=lambda self: self.env.context.get("active_id"),
         readonly=True,
@@ -48,7 +48,7 @@ class AsignarEmpleadoWizard(models.TransientModel):
 
         # Registrar en historial si el destinatario tiene departamento
         if self.destinatario_id.department_id:
-            self.env["eterp.historial.departamento"].create(
+            self.env["historial.departamento"].create(
                 {
                     "expediente_id": expediente.id,
                     "departamento_id": self.destinatario_id.department_id.id,
@@ -83,7 +83,7 @@ class AsignarDepartamentoWizard(models.TransientModel):
     _description = "Asistente para asignar expediente a departamento"
 
     expediente_id = fields.Many2one(
-        "eterp.mesa.entrada.expediente",
+        "mesa.entrada.expediente",
         string="Expediente",
         default=lambda self: self.env.context.get("active_id"),
         readonly=True,
@@ -129,7 +129,7 @@ class AsignarDepartamentoWizard(models.TransientModel):
         )
 
         # Registro en historial
-        self.env["eterp.historial.departamento"].create(
+        self.env["historial.departamento"].create(
             {
                 "expediente_id": expediente.id,
                 "departamento_id": self.departamento_id.id,
