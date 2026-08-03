@@ -41,7 +41,7 @@ Funcionalidades principales:
         "data/cron.xml",
         "views/estados.xml",
         "views/project_kanban_override.xml",
-        "views/proyect_frm.xml",
+        "views/proyect_form.xml",
         "views/proveedor.xml",
         "views/facturas.xml",
     ],

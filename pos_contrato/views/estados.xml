@@ -10,7 +10,7 @@
           <!-- Botón personalizado -->
           <button name="action_set_execution" type="object"
                   string="Pasar a En Ejecución"
-                  attrs="{'invisible': [('state_project', '!=', 'draft')]}"/>
+                  invisible="state_project != 'draft'"/>
           
           <!-- Statusbar alineado con los botones -->
           <field name="state_project"
