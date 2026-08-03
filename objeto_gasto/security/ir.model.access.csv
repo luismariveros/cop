@@ -1,3 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_objeto_gasto,access_objeto_gasto,model_eterp_objeto_gasto,base.group_user,1,1,1,1
-access_objeto_gasto_detalle,access_objeto_gasto_detalle,model_eterp_objeto_gasto_detalle,base.group_user,1,1,1,1
+access_objeto_gasto,access_objeto_gasto,model_objeto_gasto,base.group_user,1,1,1,1
+access_objeto_gasto_detalle,access_objeto_gasto_detalle,model_objeto_gasto_detalle,base.group_user,1,1,1,1

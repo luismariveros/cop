@@ -2,7 +2,7 @@ from odoo import models, fields, api
 
 
 class ObjetoGasto(models.Model):
-    _name = "eterp.objeto.gasto"
+    _name = "objeto.gasto"
     _description = "Objeto de Gasto"
     _rec_name = "name"
     _inherit = ["mail.thread", "mail.activity.mixin"]
@@ -12,7 +12,7 @@ class ObjetoGasto(models.Model):
     active = fields.Boolean(string="Activo", default=True, tracking=True)
 
     detalle_ids = fields.One2many(
-        "eterp.objeto.gasto.detalle",
+        "objeto.gasto.detalle",
         "objeto_gasto_id",
         string="Detalles",
         tracking=True,
@@ -40,7 +40,7 @@ class ObjetoGasto(models.Model):
 
 
 class ObjetoGastoDetalle(models.Model):
-    _name = "eterp.objeto.gasto.detalle"
+    _name = "objeto.gasto.detalle"
     _description = "Detalle del Objeto de Gasto"
     _order = "codigo asc"
     _rec_name = "codigo_nombre"
@@ -49,7 +49,7 @@ class ObjetoGastoDetalle(models.Model):
     name = fields.Char(string="Nombre", required=True)
     descripcion = fields.Text(string="Descripción")
     objeto_gasto_id = fields.Many2one(
-        "eterp.objeto.gasto", string="Objeto de Gasto", required=True
+        "objeto.gasto", string="Objeto de Gasto", required=True
     )
     codigo_nombre = fields.Char(
         string="Código - Nombre", compute="_compute_codigo_nombre", store=True
@@ -86,7 +86,7 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     objeto_gasto_detalle_id = fields.Many2one(
-        "eterp.objeto.gasto.detalle", string="Detalle de Objeto de Gasto"
+        "objeto.gasto.detalle", string="Detalle de Objeto de Gasto"
     )
 
     nombre_gasto = fields.Char(

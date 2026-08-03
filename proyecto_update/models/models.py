@@ -92,7 +92,7 @@ class ProjectObjetoGasto(models.Model):
         "project.project", string="Proyecto", required=True, ondelete="cascade"
     )
     objeto_gasto_id = fields.Many2one(
-        "eterp.objeto.gasto.detalle", string="Objeto de Gasto", required=True
+        "objeto.gasto.detalle", string="Objeto de Gasto", required=True
     )
     importe = fields.Float(string="Importe", required=True)
     descripcion = fields.Text(string="Descripción")
@@ -209,7 +209,7 @@ class ProjectProveedor(models.Model):
             "res_model": "project.proveedor.producto",
             "type": "ir.actions.act_window",
             "view_id": self.env.ref(
-                "eterp_proyecto_update.view_project_proveedores_product_tree"
+                "proyecto_update.view_project_proveedores_product_tree"
             ).id,
             "domain": [("proveedor_id", "=", self.id)],
             "context": {
@@ -231,7 +231,7 @@ class ProjectProveedorProducto(models.Model):
         store=True,  # Agregar store=True si necesitas búsqueda y filtrado
     )
     objeto_gasto_id = fields.Many2one(
-        "eterp.objeto.gasto.detalle", string="Objeto de Gasto", required=True
+        "objeto.gasto.detalle", string="Objeto de Gasto", required=True
     )
     product_id = fields.Many2one("product.product", string="Producto", required=True)
     nombre_gasto = fields.Char(

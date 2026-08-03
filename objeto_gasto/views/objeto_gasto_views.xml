@@ -1,19 +1,19 @@
 <odoo>
     <record id="view_objeto_gasto_tree" model="ir.ui.view">
-        <field name="name">eterp.objeto.gasto.tree</field>
-        <field name="model">eterp.objeto.gasto</field>
+        <field name="name">objeto.gasto.tree</field>
+        <field name="model">objeto.gasto</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name"/>
                 <field name="year"/>
                 <field name="active"/>
-            </tree>
+            </list>
         </field>
     </record>
 
     <record id="view_objeto_gasto_form" model="ir.ui.view">
-        <field name="name">eterp.objeto.gasto.form</field>
-        <field name="model">eterp.objeto.gasto</field>
+        <field name="name">objeto.gasto.form</field>
+        <field name="model">objeto.gasto</field>
         <field name="arch" type="xml">
             <form>
                 <sheet>
@@ -25,30 +25,26 @@
                     <notebook>
                         <page string="Detalles">
                             <field name="detalle_ids">
-                                <tree editable="bottom">
+                                <list editable="bottom">
                                     <field name="codigo"/>
                                     <field name="name"/>
                                     <field name="descripcion"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
                 </sheet>
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers"/>
-                        <field name="activity_ids" widget="mail_activity"/>
-                        <field name="message_ids" widget="mail_thread"/>
-                    </div>
+                <chatter/>
             </form>
         </field>
     </record>
 
     <record id="action_objeto_gasto" model="ir.actions.act_window">
         <field name="name">Objetos de Gasto</field>
-        <field name="res_model">eterp.objeto.gasto</field>
-        <field name="view_mode">tree,form</field>
+        <field name="res_model">objeto.gasto</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem id="menu_objeto_gasto" name="Clasificador Objeto de Gasto" sequence="10" action="action_objeto_gasto"
-    web_icon="eterp_objeto_gasto,static/description/objeto_gasto.png"/>
+    web_icon="objeto_gasto,static/description/objeto_gasto.png"/>
 </odoo>
