@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+
         <!-- Rediseño completo de la vista formulario de orden de compra -->
         <record model="ir.ui.view" id="purchase_order_form_redesign">
             <field name="name">purchase.order.form.redesign</field>
@@ -52,7 +52,7 @@
                                 <field name="currency_id" invisible="1" groups="!base.group_multi_currency"/>
                             </group>
                                                         <!-- Nueva tarjeta de información del proyecto -->
-                            <div class="alert" style="background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 4px; padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%;" attrs="{'invisible': [('proyect_id', '=', False)]}">
+                            <div class="alert" style="background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 4px; padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%;" invisble="not proyect_id">
                                 <div style="display: flex; align-items: center; margin-bottom: 5px;">
                                     <i class="fa fa-folder-open" style="color: #856404; margin-right: 5px;"></i>
                                     <span style="color: #856404; font-weight: bold;">Información del Proyecto</span>
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         <!-- Tarjeta de información del proveedor -->
-                            <div class="alert" style="background-color: #edf8ed; border: 1px solid #b8e0b8; border-radius: 4px; padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%;" attrs="{'invisible': [('partner_id', '=', False)]}">
+                            <div class="alert" style="background-color: #edf8ed; border: 1px solid #b8e0b8; border-radius: 4px; padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%;" invisble="not proyect_id">
                                 <div style="display: flex; align-items: center; margin-bottom: 5px;">
                                     <i class="fa fa-user" style="color: #2e7d32; margin-right: 5px;"></i>
                                     <span style="color: #2e7d32; font-weight: bold;">Información del Proveedor en el Proyecto</span>
@@ -102,7 +102,7 @@
                         <!-- Segunda columna - campos y tarjetas del lado derecho -->
                         <div class="col-md-6">
                             <group>
-                                <field name="fecha_orden" attrs="{'readonly': [('state','in',('purchase','done'))]}"/>
+                                <field name="fecha_orden" readonly="state in ['purchase','done']"/>
                                 <!-- Mostrar el campo daf_authorized -->
                                 <field name="daf_authorized" readonly="1" invisible="1"/>
                             </group>
@@ -111,14 +111,14 @@
                             
                             
                             <!-- Tarjeta que muestra todos los objetos de gasto del proyecto -->
-                            <div class="alert" style="background-color: #EBFEFC; border: 1px solid #EBFEFC; border-radius: 4px; padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%;" attrs="{'invisible': [('proyect_id', '=', False)]}">
+                            <div class="alert" style="background-color: #EBFEFC; border: 1px solid #EBFEFC; border-radius: 4px; padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%;" invisble="not proyect_id">
                                 <div style="display: flex; align-items: center; margin-bottom: 5px;">
                                     <i class="fa fa-list" style="color: #555; margin-right: 5px;"></i>
                                     <span style="color: #555; font-weight: bold;">Objetos de Gasto del Proyecto</span>
                                 </div>
                                 <hr style="margin-top: 5px; margin-bottom: 8px; border-color: #EBFEFC;"/>
-                                <field name="objetos_gasto_proyecto_ids" widget="many2many_tags" readonly="1" options="{'no_create': True}" attrs="{'invisible': [('proyect_id', '=', False)]}"/>
-                                <field name="objetos_gasto_display" readonly="1" attrs="{'invisible': [('proyect_id', '=', False)]}"/>
+                                <field name="objetos_gasto_proyecto_ids" widget="many2many_tags" readonly="1" options="{'no_create': True}" invisble="not proyect_id"/>
+                                <field name="objetos_gasto_display" readonly="1" invisble="not proyect_id"/>
                             </div>
                             
                             
@@ -127,7 +127,7 @@
                 </xpath>
                 
                 <!-- Ocultar la fecha planned en las líneas de pedido (vista tree) -->
-                <xpath expr="//field[@name='order_line']/tree//field[@name='date_planned']" position="attributes">
+                <xpath expr="//field[@name='order_line']/list//field[@name='date_planned']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
                 
@@ -137,5 +137,5 @@
                 </xpath>
             </field>
         </record>
-    </data>
+
 </odoo>

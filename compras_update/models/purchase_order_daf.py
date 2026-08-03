@@ -55,7 +55,7 @@ class PurchaseOrderDAFAuthorization(models.Model):
         self.ensure_one()
 
         # Verificar que el usuario pertenezca al grupo DAF
-        if not self.env.user.has_group("eterp_compras_update.group_daf"):
+        if not self.env.user.has_group("compras_update.group_daf"):
             raise UserError(
                 _(
                     "Solo los usuarios de la Dirección de Administración y Finanzas pueden autorizar órdenes de compra."
@@ -123,7 +123,7 @@ class PurchaseOrderDAFAuthorization(models.Model):
 
         # Buscar usuarios del grupo DAF para asignarles actividades
         daf_users = self.env["res.users"].search(
-            [("groups_id", "in", self.env.ref("eterp_compras_update.group_daf").id)]
+            [("groups_id", "in", self.env.ref("compras_update.group_daf").id)]
         )
 
         if not daf_users:

@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 
 
 class PurchaseOrderReport(models.AbstractModel):
-    _name = "report.eterp_compras_update.report_purchase_order"
+    _name = "report.compras_update.report_purchase_order"
     _description = "Reporte de Orden de Compra"
 
     @api.model
@@ -76,7 +76,7 @@ class PurchaseOrderReport(models.AbstractModel):
 
 
 class PurchaseOrderTestReport(models.AbstractModel):
-    _name = "report.eterp_compras_update.report_purchase_order_test"
+    _name = "report.compras_update.report_purchase_order_test"
     _description = "Reporte de Prueba de Orden de Compra"
 
     @api.model

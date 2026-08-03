@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
+           <record id="report_orden_compras" model="report.paperformat">
+            <field name="name">Solicitud de Compras - COP</field>
+            <field name="format">Legal</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">15</field>
+            <field name="margin_right">15</field>
+            <field name="header_spacing">0</field>
+            <field name="dpi">96</field>
+        </record>
+
+        <!-- Acción del Reporte -->
+
+        <record id="orden_compras_report" model="ir.actions.report">
+            <field name="name">Solicitud de Compras - COP</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">compras_update.report_purchase_order</field>
+            <field name="report_file">compras_update.report_purchase_order</field>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="compras_update.report_orden_compras"/>
+            <field name="print_report_name">'Orden de Compra/Servicio - %s' % (object.name or '')</field>
+        </record>
         <!-- Plantilla para el reporte de orden de compra -->
         <template id="report_purchase_order">
             <t t-call="web.html_container">
@@ -175,29 +201,6 @@
             </t>
         </template>
 
-        <record id="report_orden_compras" model="report.paperformat">
-            <field name="name">Solicitud de Compras - COP</field>
-            <field name="format">Legal</field>
-            <field name="orientation">Portrait</field>
-            <field name="margin_top">0</field>
-            <field name="margin_bottom">0</field>
-            <field name="margin_left">15</field>
-            <field name="margin_right">15</field>
-            <field name="header_spacing">0</field>
-            <field name="dpi">96</field>
-        </record>
 
-        <!-- Acción del Reporte -->
-        <report 
-            id="orden_compras_report"
-            model="purchase.order"
-            string="Solicitud de Compras - COP"
-            report_type="qweb-pdf"
-            name="eterp_compras_update.report_purchase_order"
-            file="eterp_compras_update.report_purchase_order"
-            print_report_name="'Orden de Compra/Servicio ' + object.name"
-            paperformat="eterp_compras_update.report_orden_compras"
-        />
-        
     </data>
 </odoo>

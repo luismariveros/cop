@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+
         <!-- Actualizar la acción del reporte oficial -->
-        <record id="eterp_compras_update.orden_compras_report" model="ir.actions.report">
+        <record id="orden_compras_report" model="ir.actions.report">
             <!-- Eliminamos la restricción de grupo para que todos puedan ver el reporte -->
             <field name="groups_id" eval="[(5, 0, 0)]"/>
             <field name="binding_model_id" ref="purchase.model_purchase_order"/>
@@ -11,7 +11,7 @@
         </record>
         
         <!-- Actualizar la plantilla del reporte oficial para verificar la autorización -->
-        <template id="report_purchase_order_authorized" inherit_id="eterp_compras_update.report_purchase_order" primary="True">
+        <template id="report_purchase_order_authorized" inherit_id="compras_update.report_purchase_order" primary="True">
             <xpath expr="//t[@t-call='web.html_container']" position="before">
                 <t t-if="not docs or not docs[0].daf_authorized">
                     <t t-set="docs" t-value="docs.filtered(lambda d: d.daf_authorized)"/>
@@ -32,5 +32,5 @@
                 </div>
             </xpath>
         </template>
-    </data>
+
 </odoo>

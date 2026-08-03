@@ -33,14 +33,17 @@ Funcionalidades principales:
     "data": [
         "data/security_groups.xml",
         "security/ir.model.access.csv",
+
         "views/views.xml",
-        "views/templates.xml",
         "views/view_encabezados.xml",
         "views/purchase_view_changes.xml",
         "views/purchase_order_line_objeto_gasto_view.xml",
         "views/purchase_view_daf.xml",
+        #
         "report/reporte_compras_daf.xml",
         "report/reporte_compras_test.xml",
+        #
+        "views/templates.xml",
     ],
     "installable": True,
     "application": False,

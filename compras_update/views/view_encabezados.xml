@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+
         <!-- Vista de formulario para encabezados -->
         <record id="view_report_encabezado_form" model="ir.ui.view">
             <field name="name">report.encabezado.form</field>
@@ -30,12 +30,12 @@
             <field name="name">report.encabezado.tree</field>
             <field name="model">report.encabezado</field>
             <field name="arch" type="xml">
-                <tree string="Encabezados para Reportes">
+                <list string="Encabezados para Reportes">
                     <field name="name"/>
                     <field name="active"/>
                     <field name="predeterminado"/>
                     <field name="departamento"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -44,7 +44,7 @@
             <field name="name">Encabezados para Reportes</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">report.encabezado</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
         </record>
 
         <!-- Elemento de menú para encabezados -->
@@ -53,5 +53,5 @@
                   action="action_report_encabezado"
                   parent="purchase.menu_purchase_config"
                   sequence="20"/>
-    </data>
+
 </odoo>

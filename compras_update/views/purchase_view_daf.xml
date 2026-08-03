@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+
         <!-- Actualizar la vista de orden de compra para añadir campos y botones de autorización DAF -->
         <record model="ir.ui.view" id="purchase_order_daf_form_view">
             <field name="name">purchase.order.daf.form</field>
@@ -13,16 +13,15 @@
                     <button name="action_request_daf_authorization" 
                             string="SOLICITAR AUTORIZACIÓN" 
                             type="object"
-                            attrs="{'invisible': ['|', '|', ('daf_authorized', '=', True), ('state', 'not in', ['purchase']), ('authorization_requested', '=', True)]}"/>
+                            invisible="daf_authorized or state not in ['purchase'] or authorization_requested"/>
                     
                     <button name="action_authorize_daf" 
                             string="AUTORIZAR" 
                             type="object" 
                             class="oe_highlight"
-                            groups="eterp_compras_update.group_daf"
-                            attrs="{'invisible': ['|', ('daf_authorized', '=', True), ('state', 'not in', ['purchase'])]}"/>
-                            
-                    
+                            groups="compras_update.group_daf"
+                            invisible="daf_authorized or state not in ['purchase']"
+                            />
                 </xpath>
                 
                 <!-- Añadir botón para revocar autorización -->
@@ -31,7 +30,7 @@
                             string="Revocar Autorización" 
                             type="object" 
                             groups="base.group_system"
-                            attrs="{'invisible': [('daf_authorized', '=', False)]}"/>
+                            invisible="not daf_authorized"/>
                 </xpath>
                 
                 <!-- Añadir información de autorización DAF en la pestaña "Otra información" -->
@@ -40,11 +39,11 @@
                         <group>
                             <group>
                                 <field name="daf_authorized" readonly="1"/>
-                                <field name="daf_authorized_by" readonly="1" attrs="{'invisible': [('daf_authorized', '=', False)]}"/>
-                                <field name="daf_authorized_date" readonly="1" attrs="{'invisible': [('daf_authorized', '=', False)]}"/>
+                                <field name="daf_authorized_by" readonly="1"  invisible="not daf_authorized"/>
+                                <field name="daf_authorized_date" readonly="1"  invisible="not daf_authorized"/>
                                 <field name="authorization_requested" readonly="1"/>
-                                <field name="authorization_requested_by" readonly="1" attrs="{'invisible': [('authorization_requested', '=', False)]}"/>
-                                <field name="authorization_requested_date" readonly="1" attrs="{'invisible': [('authorization_requested', '=', False)]}"/>
+                                <field name="authorization_requested_by" readonly="1"  invisible="not authorization_requested"/>
+                                <field name="authorization_requested_date" readonly="1" invisible="not authorization_requested"/>
                             </group>
                         </group>
                     </page>
@@ -53,16 +52,16 @@
                 <!-- Añadir indicador visual de autorización en la cabecera -->
                 <xpath expr="//div[hasclass('oe_title')]" position="after">
                     <!-- Indicador de autorización -->
-                    <div class="alert alert-success" attrs="{'invisible': [('daf_authorized', '=', False)]}" role="alert">
+                    <div class="alert alert-success" invisible="not daf_authorized" role="alert">
                         <span class="fa fa-check-circle"/> Autorizado por <field name="daf_authorized_by" readonly="1" nolabel="1"/> el <field name="daf_authorized_date" readonly="1" widget="datetime" nolabel="1"/>
                     </div>
                     
                     <!-- Indicador de solicitud pendiente -->
-                    <div class="alert alert-warning" attrs="{'invisible': ['|', ('authorization_requested', '=', False), ('daf_authorized', '=', True)]}" role="alert">
+                    <div class="alert alert-warning" invisible="not authorization_requested or daf_authorized" role="alert">
                         <span class="fa fa-clock-o"/> Autorización solicitada por <field name="authorization_requested_by" readonly="1" nolabel="1"/> el <field name="authorization_requested_date" readonly="1" widget="datetime" nolabel="1"/>
                     </div>
                 </xpath>
             </field>
         </record>
-    </data>
+
 </odoo>
