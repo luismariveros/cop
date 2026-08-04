@@ -14,16 +14,17 @@
     </record>
 
     <!-- Acción del Reporte -->
-    <report 
-        id="gestion_operacional_report"
-        model="gestion.operacional"
-        string="Reporte de Gestión Operacional"
-        report_type="qweb-pdf"
-        name="eterp_gestion_operacional.report_gestion_operacional"
-        file="eterp_gestion_operacional.report_gestion_operacional"
-        print_report_name="'GestionOperacional_%s' % (object.expediente)"
-        paperformat="eterp_gestion_operacional.reporte_gestion_operacional"
-    />
+    <record id="gestion_operacional_report" model="ir.actions.report">
+        <field name="name">Reporte de Gestión Operacional</field>
+        <field name="model">gestion.operacional</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gestion_operacional.report_gestion_operacional</field>
+        <field name="report_file">gestion_operacional.report_gestion_operacional</field>
+        <field name="binding_model_id" ref="model_gestion_operacional"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="reporte_gestion_operacional"/>
+        <field name="print_report_name">'GestionOperacional_%s' % (object.expediente or '')</field>
+    </record>
 
     <!-- Plantilla del Reporte -->
     <template id="report_gestion_operacional">
@@ -36,11 +37,11 @@
                         <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif;">
                             <tr>
                                 <!-- Acceso a imágenes desde la carpeta static del módulo -->
-                                <td style="width: 30%;"><img t-att-src="'/eterp_gestion_operacional/static/img/snd.png'" alt="SND Logo" style="max-width: 250px;"/></td>
-                                <td style="width: 30%;"><img t-att-src="'/eterp_gestion_operacional/static/img/cop.png'" alt="COP Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 30%;"><img t-att-src="'/gestion_operacional/static/img/snd.png'" alt="SND Logo" style="max-width: 250px;"/></td>
+                                <td style="width: 30%;"><img t-att-src="'/gestion_operacional/static/img/cop.png'" alt="COP Logo" style="max-width: 150px;"/></td>
                                 <td style="width: 30%;"></td>
-                                <td style="width: 30%;"><img t-att-src="'/eterp_gestion_operacional/static/img/asu.png'" alt="ASU Logo" style="max-width: 150px;"/></td>
-                                <td style="width: 30%;"><img t-att-src="'/eterp_gestion_operacional/static/img/panam.png'" alt="Panamerican Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 30%;"><img t-att-src="'/gestion_operacional/static/img/asu.png'" alt="ASU Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 30%;"><img t-att-src="'/gestion_operacional/static/img/panam.png'" alt="Panamerican Logo" style="max-width: 150px;"/></td>
                             </tr>
                             <tr>
                                 <td colspan="5" style="border-bottom: 1px solid #000; padding: 10px 0; text-align: center;">DIRECCIÓN DE ADMINISTRACIÓN Y FINANZAS - ASU 2024/2025</td>
@@ -204,11 +205,11 @@
                         <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif;">
                             <tr>
                                 <!-- Acceso a imágenes desde la carpeta static del módulo -->
-                                <td style="width: 30%;"><img t-att-src="'/eterp_gestion_operacional/static/img/snd.png'" alt="SND Logo" style="max-width: 250px;"/></td>
-                                <td style="width: 30%;"><img t-att-src="'/eterp_gestion_operacional/static/img/cop.png'" alt="COP Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 30%;"><img t-att-src="'/gestion_operacional/static/img/snd.png'" alt="SND Logo" style="max-width: 250px;"/></td>
+                                <td style="width: 30%;"><img t-att-src="'/gestion_operacional/static/img/cop.png'" alt="COP Logo" style="max-width: 150px;"/></td>
                                 <td style="width: 30%;"></td>
-                                <td style="width: 30%;"><img t-att-src="'/eterp_gestion_operacional/static/img/asu.png'" alt="ASU Logo" style="max-width: 150px;"/></td>
-                                <td style="width: 30%;"><img t-att-src="'/eterp_gestion_operacional/static/img/panam.png'" alt="Panamerican Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 30%;"><img t-att-src="'/gestion_operacional/static/img/asu.png'" alt="ASU Logo" style="max-width: 150px;"/></td>
+                                <td style="width: 30%;"><img t-att-src="'/gestion_operacional/static/img/panam.png'" alt="Panamerican Logo" style="max-width: 150px;"/></td>
                             </tr>
                             <tr>
                                 <td colspan="5" style="border-bottom: 1px solid #000; padding: 10px 0; text-align: center;">DIRECCIÓN DE ADMINISTRACIÓN Y FINANZAS - ASU 2024/2025</td>

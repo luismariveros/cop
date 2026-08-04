@@ -21,7 +21,7 @@ class GestionOperacional(models.Model):
 
     # Cambiado a no requerido
     expediente_id = fields.Many2one(
-        "eterp.mesa.entrada.expediente",
+        "mesa.entrada.expediente",
         string="Expediente",
         required=False,
         tracking=True,
@@ -369,7 +369,7 @@ class GestionOperacional(models.Model):
             "name": "Órdenes de Compra",
             "type": "ir.actions.act_window",
             "res_model": "purchase.order",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "domain": domain,
         }
 
@@ -395,7 +395,7 @@ class GestionOperacional(models.Model):
             "name": "Facturas",
             "type": "ir.actions.act_window",
             "res_model": "account.move",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "domain": domain,
         }
 
@@ -405,7 +405,7 @@ class GestionOperacional(models.Model):
             "name": "Documentos Relacionados",
             "type": "ir.actions.act_window",
             "res_model": "gestion.operacional.documento",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "domain": [("gestion_operacional_id", "=", self.id)],
             "context": {
                 "default_gestion_operacional_id": self.id,

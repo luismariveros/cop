@@ -1,445 +1,671 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Vista Tree para Gestión Operacional -->
-    <record id="view_gestion_operacional_tree" model="ir.ui.view">
-        <field name="name">gestion.operacional.tree</field>
-        <field name="model">gestion.operacional</field>
-        <field name="arch" type="xml">
-            <tree>
-                <field name="proyecto_id"/>
-                <field name="fecha"/>
-                <field name="area_solicitante"/>
-                <field name="nro_formulario"/>
-                <field name="expediente"/>
-                <field name="proveedor_id"/>
-                <field name="monto"/>
-                <field name="objeto_gasto_detalle_id"/>
-                <field name="monto_total_proyecto"/>
-                <field name="monto_utilizado"/>
-                <field name="saldo_disponible"/>
-                <field name="purchase_order_count"/>
-                <field name="invoice_count"/>
-            </tree>
-        </field>
-    </record>
+    <data>
 
-    <!-- Vista Form para Gestión Operacional -->
-    <record id="view_gestion_operacional_form" model="ir.ui.view">
-        <field name="name">gestion.operacional.form</field>
-        <field name="model">gestion.operacional</field>
-        <field name="arch" type="xml">
-            <form>
-                <header>
-                    <button name="action_confirmar" 
-                            string="Confirmar" 
-                            type="object" 
-                            class="oe_highlight"
-                            states="borrador"/>
-                    <button name="action_volver_borrador" 
-                            string="Volver a Borrador" 
-                            type="object"
-                            states="confirmado"/>
-                    <field name="state" widget="statusbar" 
-                            statusbar_visible="borrador,confirmado"/>
-                </header>
-                <sheet>
-                    <div class="oe_title">
-                        <h1>
-                            <field name="nro_formulario" placeholder="Número de Formulario"/>
-                        </h1>
-                        <h2>
-                            <field name="expediente_id" placeholder="Seleccione el Expediente"/>
-                        </h2>
-                    </div>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="action_view_purchase_orders" type="object" class="oe_stat_button" icon="fa-shopping-cart">
-                            <field name="purchase_order_count" widget="statinfo" string="Órdenes"/>
-                        </button>
-                        <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o">
-                            <field name="invoice_count" widget="statinfo" string="Facturas"/>
-                        </button>
-                    </div>
-                    <group>
+        <!-- Lista principal de Gestión Operacional -->
+        <record id="view_gestion_operacional_tree" model="ir.ui.view">
+            <field name="name">gestion.operacional.list</field>
+            <field name="model">gestion.operacional</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="proyecto_id"/>
+                    <field name="fecha"/>
+                    <field name="area_solicitante"/>
+                    <field name="nro_formulario"/>
+                    <field name="expediente"/>
+                    <field name="proveedor_id"/>
+                    <field name="monto"/>
+                    <field name="objeto_gasto_detalle_id"/>
+                    <field name="monto_total_proyecto"/>
+                    <field name="monto_utilizado"/>
+                    <field name="saldo_disponible"/>
+                    <field name="purchase_order_count"/>
+                    <field name="invoice_count"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Formulario principal de Gestión Operacional -->
+        <record id="view_gestion_operacional_form" model="ir.ui.view">
+            <field name="name">gestion.operacional.form</field>
+            <field name="model">gestion.operacional</field>
+            <field name="arch" type="xml">
+                <form string="Gestión Operacional">
+                    <header>
+                        <button name="action_confirmar"
+                                string="Confirmar"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'borrador'"/>
+
+                        <button name="action_volver_borrador"
+                                string="Volver a Borrador"
+                                type="object"
+                                invisible="state != 'confirmado'"/>
+
+                        <field name="state"
+                               widget="statusbar"
+                               statusbar_visible="borrador,confirmado"/>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_purchase_orders"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-shopping-cart">
+                                <field name="purchase_order_count"
+                                       widget="statinfo"
+                                       string="Órdenes"/>
+                            </button>
+
+                            <button name="action_view_invoices"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-file-text-o">
+                                <field name="invoice_count"
+                                       widget="statinfo"
+                                       string="Facturas"/>
+                            </button>
+                        </div>
+
+                        <div class="oe_title">
+                            <h1>
+                                <field name="nro_formulario"
+                                       placeholder="Número de Formulario"/>
+                            </h1>
+                            <h2>
+                                <field name="expediente_id"
+                                       placeholder="Seleccione el Expediente"/>
+                            </h2>
+                        </div>
+
                         <group>
-                            <field name="proyecto_id"/>
-                            <field name="fecha"/>
-                            <field name="area_solicitante"/>
-                            <field name="destino"/>
+                            <group>
+                                <field name="proyecto_id"/>
+                                <field name="fecha"/>
+                                <field name="area_solicitante"/>
+                                <field name="destino"/>
+                            </group>
+
+                            <group>
+                                <field name="proveedor_id"/>
+                                <field name="monto"/>
+                                <field name="objeto_gasto_detalle_id"/>
+                                <field name="monto_total_proyecto"/>
+                                <field name="monto_utilizado"/>
+                                <field name="saldo_disponible"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </group>
                         </group>
-                        <group>
-                            <field name="proveedor_id"/>
-                            <field name="monto"/>
-                            <field name="objeto_gasto_detalle_id"/>
-                            <field name="monto_total_proyecto"/>
-                            <field name="monto_utilizado"/>
-                            <field name="saldo_disponible" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                        </group>
-                    </group>
-                    <notebook>
-                        <page string="Verificación">
-                            <field name="lineas_detalle_ids">
-                                <tree>
-                                    <field name="create_date" string="Registrado el: "/>
-                                    <field name="create_uid" string="Registrado por: "/>
-                                </tree>
-                                <form>
-                                    <sheet>
-                                        <group>
+
+                        <notebook>
+
+                            <!-- Verificación documental -->
+                            <page string="Verificación" name="verification">
+                                <field name="lineas_detalle_ids">
+                                    <list>
+                                        <field name="create_date"
+                                               string="Registrado el"/>
+                                        <field name="create_uid"
+                                               string="Registrado por"/>
+                                    </list>
+
+                                    <form string="Verificación">
+                                        <sheet>
                                             <group>
-                                                <field name="remision_expediente" widget="radio"/>
-                                                <field name="nota_solicitud_pago" widget="radio"/>
-                                                <field name="invoice" widget="radio"/>
-                                                <field name="nota_remision" widget="radio"/>
-                                                <field name="cct" widget="radio"/>
-                                                <field name="pago_ultima_djj" widget="radio"/>
-                                                <field name="constancia_ruc" widget="radio"/>
-                                                <field name="certificado_social" widget="radio"/>
-                                                <field name="formulario_fis" widget="radio"/>
-                                                <field name="formulario_fip" widget="radio"/>
+                                                <group>
+                                                    <field name="remision_expediente"
+                                                           widget="radio"/>
+                                                    <field name="nota_solicitud_pago"
+                                                           widget="radio"/>
+                                                    <field name="invoice"
+                                                           widget="radio"/>
+                                                    <field name="nota_remision"
+                                                           widget="radio"/>
+                                                    <field name="cct"
+                                                           widget="radio"/>
+                                                    <field name="pago_ultima_djj"
+                                                           widget="radio"/>
+                                                    <field name="constancia_ruc"
+                                                           widget="radio"/>
+                                                    <field name="certificado_social"
+                                                           widget="radio"/>
+                                                    <field name="formulario_fis"
+                                                           widget="radio"/>
+                                                    <field name="formulario_fip"
+                                                           widget="radio"/>
+                                                </group>
+
+                                                <group>
+                                                    <field name="contancia_registro_prestadores_servicios"
+                                                           widget="radio"/>
+                                                    <field name="nota_prestacion_servicio"
+                                                           widget="radio"/>
+                                                    <field name="nota_pedido_realizacion_trabajo"
+                                                           widget="radio"/>
+                                                    <field name="orden_de_compra"
+                                                           widget="radio"/>
+                                                    <field name="informe_mensual_actividades_contratado"
+                                                           widget="radio"/>
+                                                    <field name="resolucion_nombremiento_encargado"
+                                                           widget="radio"/>
+                                                    <field name="nota_pedido_interno"
+                                                           widget="radio"/>
+                                                    <field name="informe_dictamen_adquisicion"
+                                                           widget="radio"/>
+                                                    <field name="res_aprovacion_programa_anual_contrataciones"
+                                                           widget="radio"/>
+                                                    <field name="nota_remision_pac_pfi_dncp"
+                                                           widget="radio"/>
+                                                </group>
+
+                                                <group>
+                                                    <field name="certificado_disponibilidad_presupuestaria"
+                                                           widget="radio"/>
+                                                    <field name="carta_invitacion_proveedores"
+                                                           widget="radio"/>
+                                                    <field name="acta_apertura_sobres"
+                                                           widget="radio"/>
+                                                    <field name="informe_comite_evaluacion"
+                                                           widget="radio"/>
+                                                    <field name="informe_dictamen_contratacion"
+                                                           widget="radio"/>
+                                                    <field name="res_adjudicacion"
+                                                           widget="radio"/>
+                                                    <field name="copia_contrato"
+                                                           widget="radio"/>
+                                                    <field name="codigo_contrataciones"
+                                                           widget="radio"/>
+                                                    <field name="poliza_seguro_djj"
+                                                           widget="radio"/>
+                                                    <field name="djj_garantia_anticipo"
+                                                           widget="radio"/>
+                                                </group>
+
+                                                <group>
+                                                    <field name="djj_respoponsabilidad_profesional"
+                                                           widget="radio"/>
+                                                    <field name="djj_garantia_mantenimiento_oferta"
+                                                           widget="radio"/>
+                                                    <field name="cert_interdiccion_judicial_quiebra"
+                                                           widget="radio"/>
+                                                    <field name="informe_anotaciones_personales"
+                                                           widget="radio"/>
+                                                </group>
+
+                                                <group string="Observaciones">
+                                                    <field name="observaciones"/>
+                                                </group>
                                             </group>
-                                            <group>
-                                                <field name="contancia_registro_prestadores_servicios" widget="radio"/>
-                                                <field name="nota_prestacion_servicio" widget="radio"/>
-                                                <field name="nota_pedido_realizacion_trabajo" widget="radio"/>
-                                                <field name="orden_de_compra" widget="radio"/>
-                                                <field name="informe_mensual_actividades_contratado" widget="radio"/>
-                                                <field name="resolucion_nombremiento_encargado" widget="radio"/>
-                                                <field name="nota_pedido_interno" widget="radio"/>
-                                                <field name="informe_dictamen_adquisicion" widget="radio"/>
-                                                <field name="res_aprovacion_programa_anual_contrataciones" widget="radio"/>
-                                                <field name="nota_remision_pac_pfi_dncp" widget="radio"/>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+
+                            <!-- Control OG 839 -->
+                            <page string="Control OG 839" name="control_839">
+                                <field name="control_839_ids" nolabel="1">
+                                    <list>
+                                        <field name="create_date"
+                                               string="Registrado el"/>
+                                        <field name="create_uid"
+                                               string="Registrado por"/>
+                                    </list>
+
+                                    <form string="Control OG 839">
+                                        <sheet>
+                                            <group string="REGLAMENTO INTERNO UEP - SND / CONTROL OG 839 'OTRAS TRANSFERENCIAS CORRIENTES AL SECTOR PÚBLICO O PRIVADO VARIAS'">
+
+                                                <group string="Art. N° 6: Plazos para la presentación de los proyectos, solicitudes de desembolsos y/o reconsideraciones">
+                                                    <field name="art6_1"
+                                                           widget="radio"
+                                                           string="Programa o Proyecto Deportivo financiado por el Objeto de Gasto 839"/>
+                                                </group>
+
+                                                <group string="Art. N° 7: Las solicitudes de subvención regidos por esta reglamentación deberán ser presentadas conforme a los siguientes parámetros">
+                                                    <field name="art7_1"
+                                                           widget="radio"
+                                                           string="Para Entidades Inscritas en el Registro de Entidades Deportivas"/>
+                                                    <field name="art7_2"
+                                                           widget="radio"
+                                                           string="Formulario de Elaboración de Proyectos - Ficha Técnica"/>
+                                                    <field name="art7_3"
+                                                           widget="radio"
+                                                           string="Copia del Acta de sesión de la Comisión Directiva"/>
+                                                    <field name="art7_4"
+                                                           widget="radio"
+                                                           string="Formulario B-01-01 B 'Programación de Ingresos'"/>
+                                                    <field name="art7_5"
+                                                           widget="radio"
+                                                           string="Formulario B-01-01 C 'Programación de Gastos'"/>
+                                                    <field name="art7_6"
+                                                           widget="radio"
+                                                           string="Formulario B-01-01 D 'Planificación de Servicios'"/>
+                                                    <field name="art7_7"
+                                                           widget="radio"
+                                                           string="Constancia de Inscripción en el IDAP"/>
+                                                    <field name="art7_8"
+                                                           widget="radio"
+                                                           string="Copia del Registro Único del Contribuyente (RUC)"/>
+                                                    <field name="art7_9"
+                                                           widget="radio"
+                                                           string="Copia de Cédula Tributaria y Perfil del Contribuyente"/>
+                                                    <field name="art7_10"
+                                                           widget="radio"
+                                                           string="Certificado original y vigente de Cuenta Bancaria"/>
+                                                </group>
+
+                                                <group string="Art. 8: Requisitos para la adquisición de subvenciones en el marco de los II Juegos Panamericanos Junior 2025">
+                                                    <field name="art8_1"
+                                                           widget="radio"
+                                                           string="Evento deportivo internacional (programa y calendario)"/>
+                                                    <field name="art8_2"
+                                                           widget="radio"
+                                                           string="Pago de pasajes aéreos y/o terrestres, traslados internos"/>
+                                                    <field name="art8_3"
+                                                           widget="radio"
+                                                           string="Escala de pagos para servicios personales"/>
+                                                    <field name="art8_4"
+                                                           widget="radio"
+                                                           string="Listado de beneficiarios con copia de títulos de grado o tecnicatura"/>
+                                                    <field name="art8_5"
+                                                           widget="radio"
+                                                           string="Contratación bajo O.G. 260 'Servicios Técnicos y Profesionales'"/>
+                                                    <field name="art8_6"
+                                                           widget="radio"
+                                                           string="Solicitud de indumentaria deportiva o implementos deportivos"/>
+                                                    <field name="art8_7"
+                                                           widget="radio"
+                                                           string="Solicitud de subvención para compra de combustible"/>
+                                                    <field name="art8_8"
+                                                           widget="radio"
+                                                           string="Solicitud para capacitaciones, adiestramientos o entrenamientos"/>
+                                                    <field name="art8_9"
+                                                           widget="radio"
+                                                           string="Contratación de consultorías (tres postulantes mínimo)"/>
+                                                </group>
+
+                                                <group string="Art. 15: Adquisición de bienes y servicios u obras">
+                                                    <field name="art15_1"
+                                                           widget="radio"
+                                                           string="Proceso competitivo para adquisiciones a partir de Gs.: 4.999.999"/>
+                                                    <field name="art15_2"
+                                                           widget="radio"
+                                                           string="Cuadro comparativo de ofertas - Formulario B 02-08"/>
+                                                    <field name="art15_3"
+                                                           widget="radio"
+                                                           string="Prestaciones de servicios que alcancen el monto de Gs.: 4.999.999"/>
+                                                    <field name="art15_4"
+                                                           widget="radio"
+                                                           string="Compras de un mismo proveedor que superen la suma de Gs.: 4.999.999"/>
+                                                    <field name="art15_5"
+                                                           widget="radio"
+                                                           string="Nota de aclaración para representante exclusivo"/>
+                                                </group>
+
+                                                <group string="Art. 16: Moneda extranjera">
+                                                    <field name="art16_1"
+                                                           widget="radio"
+                                                           string="Subvenciones en moneda extranjera (tipo de cambio BCP)"/>
+                                                </group>
+
+                                                <group string="Art. 17: Viáticos">
+                                                    <field name="art17_1"
+                                                           widget="radio"
+                                                           string="Solicitudes de financiamiento para viáticos"/>
+                                                </group>
+
+                                                <group string="Art. 18: Reglas de visibilidad de financiamiento">
+                                                    <field name="art18_1"
+                                                           widget="radio"
+                                                           string="Logo de UEP - SND, Gobierno Nacional, COP, PANAM u Olimpiadas especiales"/>
+                                                </group>
+
+                                                <group string="Observaciones">
+                                                    <field name="observaciones"/>
+                                                </group>
+
                                             </group>
-                                            <group>
-                                                <field name="certificado_disponibilidad_presupuestaria" widget="radio"/>
-                                                <field name="carta_invitacion_proveedores" widget="radio"/>
-                                                <field name="acta_apertura_sobres" widget="radio"/>
-                                                <field name="informe_comite_evaluacion" widget="radio"/>
-                                                <field name="informe_dictamen_contratacion" widget="radio"/>
-                                                <field name="res_adjudicacion" widget="radio"/>
-                                                <field name="copia_contrato" widget="radio"/>
-                                                <field name="codigo_contrataciones" widget="radio"/>
-                                                <field name="poliza_seguro_djj" widget="radio"/>
-                                                <field name="djj_garantia_anticipo" widget="radio"/>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+
+                            <!-- Control OG 879 -->
+                            <page string="Control OG 879" name="control_879">
+                                <field name="control_879_ids" nolabel="1">
+                                    <list>
+                                        <field name="create_date"
+                                               string="Registrado el"/>
+                                        <field name="create_uid"
+                                               string="Registrado por"/>
+                                    </list>
+
+                                    <form string="Control OG 879">
+                                        <sheet>
+                                            <group string="REGLAMENTO INTERNO UEP - SND / CONTROL OG 879 'TRANSFERENCIAS DE CAPITAL AL SECTOR PRIVADO VARIAS'">
+
+                                                <group string="Art. N° 6: Plazos para la presentación de los proyectos">
+                                                    <field name="art6_1"
+                                                           widget="radio"
+                                                           string="Programa o Proyecto Deportivo (presentado hasta el 10 del mes)"/>
+                                                </group>
+
+                                                <group string="Art. N° 7: Las solicitudes de subvención">
+                                                    <field name="art7_1"
+                                                           widget="radio"
+                                                           string="Para Entidades Inscritas en el Registro de Entidades Deportivas"/>
+                                                    <field name="art7_2"
+                                                           widget="radio"
+                                                           string="Formulario de Elaboración de Proyectos - Ficha Técnica"/>
+                                                    <field name="art7_3"
+                                                           widget="radio"
+                                                           string="Copia del Acta de sesión de la Comisión Directiva"/>
+                                                    <field name="art7_4"
+                                                           widget="radio"
+                                                           string="Formulario B-01-01 B 'Programación de Ingresos'"/>
+                                                    <field name="art7_5"
+                                                           widget="radio"
+                                                           string="Formulario B-01-01 C 'Programación de Gastos'"/>
+                                                    <field name="art7_6"
+                                                           widget="radio"
+                                                           string="Formulario B-01-01 D 'Planificación de Servicios'"/>
+                                                    <field name="art7_7"
+                                                           widget="radio"
+                                                           string="Constancia de Inscripción en el IDAP"/>
+                                                    <field name="art7_8"
+                                                           widget="radio"
+                                                           string="Copia del Registro Único del Contribuyente (RUC)"/>
+                                                    <field name="art7_9"
+                                                           widget="radio"
+                                                           string="Copia de Cédula Tributaria y Perfil del Contribuyente"/>
+                                                    <field name="art7_10"
+                                                           widget="radio"
+                                                           string="Certificado original y vigente de Cuenta Bancaria"/>
+                                                </group>
+
+                                                <group string="Art. 10: Objeto del Gasto 879 'Transferencias de Capital al sector privado varias'">
+                                                    <field name="art10_1"
+                                                           widget="radio"
+                                                           string="Gastos de inversión destinados a los Juegos Latinoamericanos/Panamericanos"/>
+                                                    <field name="art10_2"
+                                                           widget="radio"
+                                                           string="Obras contempladas en el Convenio Marco aprobado"/>
+                                                </group>
+
+                                                <group string="Anexos para obras">
+                                                    <field name="anexo12"
+                                                           widget="radio"
+                                                           string="Anexo XII: Documento de aprobación de proyecto de obras"/>
+                                                    <field name="anexo13"
+                                                           widget="radio"
+                                                           string="Anexo XIII: Documento para pago de proyecto de obras"/>
+                                                    <field name="anexo14"
+                                                           widget="radio"
+                                                           string="Anexo XIV: Resumen de certificado de obras"/>
+                                                    <field name="anexo15"
+                                                           widget="radio"
+                                                           string="Anexo XV: Certificado de obras"/>
+                                                    <field name="anexo16"
+                                                           widget="radio"
+                                                           string="Anexo XVI: Cómputo métrico y presupuesto de obra"/>
+                                                    <field name="anexo17"
+                                                           widget="radio"
+                                                           string="Anexo XVII: Cronograma físico financiero de obra"/>
+                                                    <field name="anexo18"
+                                                           widget="radio"
+                                                           string="Anexo XVIII: Análisis fotográficos de obras"/>
+                                                </group>
+
+                                                <group string="Art. 11: Pólizas de Seguros">
+                                                    <field name="art11_1"
+                                                           widget="radio"
+                                                           string="Póliza de Seguro de Ejecución de contrato (10%)"/>
+                                                    <field name="art11_2"
+                                                           widget="radio"
+                                                           string="Póliza de Seguro de Anticipo Financiero (hasta 20%)"/>
+                                                    <field name="art11_3"
+                                                           widget="radio"
+                                                           string="Póliza de Seguro de Responsabilidad Civil"/>
+                                                    <field name="art11_4"
+                                                           widget="radio"
+                                                           string="Póliza de Seguro Contra Todo Riesgo Contratista"/>
+                                                    <field name="art11_5"
+                                                           widget="radio"
+                                                           string="Póliza de Seguro por Accidentes Personales"/>
+                                                    <field name="art11_6"
+                                                           widget="radio"
+                                                           string="Ampliación de Garantía por modificación del cronograma"/>
+                                                    <field name="art11_7"
+                                                           widget="radio"
+                                                           string="Presentación de pólizas dentro de los 5 días"/>
+                                                </group>
+
+                                                <group string="Art. 15: Adquisición de bienes y servicios u obras">
+                                                    <field name="art15_1"
+                                                           widget="radio"
+                                                           string="Proceso competitivo para adquisiciones a partir de Gs.: 4.999.999"/>
+                                                    <field name="art15_2"
+                                                           widget="radio"
+                                                           string="Cuadro comparativo de ofertas - Formulario B 02-08"/>
+                                                    <field name="art15_3"
+                                                           widget="radio"
+                                                           string="Prestaciones de servicios que alcancen el monto de Gs.: 4.999.999"/>
+                                                    <field name="art15_4"
+                                                           widget="radio"
+                                                           string="Compras de un mismo proveedor que alcancen o superen Gs.: 4.999.999"/>
+                                                    <field name="art15_5"
+                                                           widget="radio"
+                                                           string="Nota de aclaración para representante exclusivo"/>
+                                                </group>
+
+                                                <group string="Art. 18: Reglas de visibilidad de financiamiento">
+                                                    <field name="art18_1"
+                                                           widget="radio"
+                                                           string="Logo de UEP - SND, Gobierno Nacional, COP, PANAM u Olimpiadas especiales"/>
+                                                </group>
+
+                                                <group string="Observaciones">
+                                                    <field name="observaciones"/>
+                                                </group>
+
                                             </group>
-                                            <group>
-                                                <field name="djj_respoponsabilidad_profesional" widget="radio"/>
-                                                <field name="djj_garantia_mantenimiento_oferta" widget="radio"/>
-                                                <field name="cert_interdiccion_judicial_quiebra" widget="radio"/>
-                                                <field name="informe_anotaciones_personales" widget="radio"/>
-                                            
-                                            </group>
-                                            <group string="Observaciones">
-                                                <field name="observaciones"/>
-                                            </group>
-                                        </group>
-                                    </sheet>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Control OG 839">
-                            <field name="control_839_ids" nolabel="1">
-                                <tree>
-                                    <field name="create_date" string="Registrado el: "/>
-                                    <field name="create_uid" string="Registrado por: "/>
-                                </tree>
-                                <form>
-                                    <sheet>
-                                        <group string="REGLAMENTO INTERNO UEP - SND / CONTROL OG 839 'OTRAS TRANSFERENCIAS CORRIENTES AL SECTOR PÚBLICO O PRIVADO VARIAS'">
-                                            <group string="Art. N° 6: Plazos para la presentación de los proyectos, solicitudes de desembolsos y/o reconsideraciones">
-                                                <field name="art6_1" widget="radio" string="Programa o Proyecto Deportivo financiado por el Objeto de Gasto 839"/>
-                                            </group>
-                                            
-                                            <group string="Art. N° 7: Las solicitudes de subvención regidos por esta reglamentación deberán ser presentadas conforme a los siguientes parámetros">
-                                                <field name="art7_1" widget="radio" string="Para Entidades Inscritas en el Registro de Entidades Deportivas"/>
-                                                <field name="art7_2" widget="radio" string="Formulario de Elaboración de Proyectos - Ficha Técnica"/>
-                                                <field name="art7_3" widget="radio" string="Copia del Acta de sesión de la Comisión Directiva"/>
-                                                <field name="art7_4" widget="radio" string="Formulario B-01-01 B 'Programación de Ingresos'"/>
-                                                <field name="art7_5" widget="radio" string="Formulario B-01-01 C 'Programación de Gastos'"/>
-                                                <field name="art7_6" widget="radio" string="Formulario B-01-01 D 'Planificación de Servicios'"/>
-                                                <field name="art7_7" widget="radio" string="Constancia de Inscripción en el IDAP"/>
-                                                <field name="art7_8" widget="radio" string="Copia del Registro Único del Contribuyente (RUC)"/>
-                                                <field name="art7_9" widget="radio" string="Copia de Cédula Tributaria y Perfil del Contribuyente"/>
-                                                <field name="art7_10" widget="radio" string="Certificado original y vigente de Cuenta Bancaria"/>
-                                            </group>
-                                            
-                                            <group string="Art. 8: Requisitos para la adquisición de subvenciones en el marco de los II Juegos Panamericanos Junior 2025">
-                                                <field name="art8_1" widget="radio" string="Evento deportivo internacional (programa y calendario)"/>
-                                                <field name="art8_2" widget="radio" string="Pago de pasajes aéreos y/o terrestres, traslados internos"/>
-                                                <field name="art8_3" widget="radio" string="Escala de pagos para servicios personales"/>
-                                                <field name="art8_4" widget="radio" string="Listado de beneficiarios con copia de títulos de grado o tecnicatura"/>
-                                                <field name="art8_5" widget="radio" string="Contratación bajo O.G. 260 'Servicios Técnicos y Profesionales'"/>
-                                                <field name="art8_6" widget="radio" string="Solicitud de indumentaria deportiva o implementos deportivos"/>
-                                                <field name="art8_7" widget="radio" string="Solicitud de subvención para compra de combustible"/>
-                                                <field name="art8_8" widget="radio" string="Solicitud para capacitaciones, adiestramientos o entrenamientos"/>
-                                                <field name="art8_9" widget="radio" string="Contratación de consultorías (tres postulantes mínimo)"/>
-                                            </group>
-                                            
-                                            <group string="Art. 15: Adquisición de bienes y servicios u obras">
-                                                <field name="art15_1" widget="radio" string="Proceso competitivo para adquisiciones a partir de Gs.: 4.999.999"/>
-                                                <field name="art15_2" widget="radio" string="Cuadro comparativo de ofertas - Formulario B 02-08"/>
-                                                <field name="art15_3" widget="radio" string="Prestaciones de servicios que alcancen el monto de Gs.: 4.999.999"/>
-                                                <field name="art15_4" widget="radio" string="Compras de un mismo proveedor que superen la suma de Gs.: 4.999.999"/>
-                                                <field name="art15_5" widget="radio" string="Nota de aclaración para representante exclusivo"/>
-                                            </group>
-                                            
-                                            <group string="Art. 16: Moneda extranjera">
-                                                <field name="art16_1" widget="radio" string="Subvenciones en moneda extranjera (tipo de cambio BCP)"/>
-                                            </group>
-                                            
-                                            <group string="Art. 17: Viáticos">
-                                                <field name="art17_1" widget="radio" string="Solicitudes de financiamiento para viáticos"/>
-                                            </group>
-                                            
-                                            <group string="Art. 18: Reglas de visibilidad de financiamiento">
-                                                <field name="art18_1" widget="radio" string="Logo de UEP - SND, Gobierno Nacional, COP, PANAM u Olimpiadas especiales"/>
-                                            </group>
-                                            
-                                            <group string="Observaciones">
-                                                <field name="observaciones"/>
-                                            </group>
-                                        </group>
-                                    </sheet>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Control OG 879">
-                            <field name="control_879_ids" nolabel="1">
-                                <tree>
-                                    <field name="create_date" string="Registrado el: "/>
-                                    <field name="create_uid" string="Registrado por: "/>
-                                </tree>
-                                <form>
-                                    <sheet>
-                                        <group string="REGLAMENTO INTERNO UEP - SND / CONTROL OG 879 'TRANSFERENCIAS DE CAPITAL AL SECTOR PRIVADO VARIAS'">
-                                            <group string="Art. N° 6: Plazos para la presentación de los proyectos">
-                                                <field name="art6_1" widget="radio" string="Programa o Proyecto Deportivo (presentado hasta el 10 del mes)"/>
-                                            </group>
-                                            
-                                            <group string="Art. N° 7: Las solicitudes de subvención">
-                                                <field name="art7_1" widget="radio" string="Para Entidades Inscritas en el Registro de Entidades Deportivas"/>
-                                                <field name="art7_2" widget="radio" string="Formulario de Elaboración de Proyectos - Ficha Técnica"/>
-                                                <field name="art7_3" widget="radio" string="Copia del Acta de sesión de la Comisión Directiva"/>
-                                                <field name="art7_4" widget="radio" string="Formulario B-01-01 B 'Programación de Ingresos'"/>
-                                                <field name="art7_5" widget="radio" string="Formulario B-01-01 C 'Programación de Gastos'"/>
-                                                <field name="art7_6" widget="radio" string="Formulario B-01-01 D 'Planificación de Servicios'"/>
-                                                <field name="art7_7" widget="radio" string="Constancia de Inscripción en el IDAP"/>
-                                                <field name="art7_8" widget="radio" string="Copia del Registro Único del Contribuyente (RUC)"/>
-                                                <field name="art7_9" widget="radio" string="Copia de Cédula Tributaria y Perfil del Contribuyente"/>
-                                                <field name="art7_10" widget="radio" string="Certificado original y vigente de Cuenta Bancaria"/>
-                                            </group>
-                                            
-                                            <group string="Art. 10: Objeto del Gasto 879 'Transferencias de Capital al sector privado varias'">
-                                                <field name="art10_1" widget="radio" string="Gastos de inversión destinados a los Juegos Latinoamericanos/Panamericanos"/>
-                                                <field name="art10_2" widget="radio" string="Obras contempladas en el Convenio Marco aprobado"/>
-                                            </group>
-                                            
-                                            <group string="Anexos para obras">
-                                                <field name="anexo12" widget="radio" string="Anexo XII: Documento de aprobación de proyecto de obras"/>
-                                                <field name="anexo13" widget="radio" string="Anexo XIII: Documento para pago de proyecto de obras"/>
-                                                <field name="anexo14" widget="radio" string="Anexo XIV: Resumen de certificado de obras"/>
-                                                <field name="anexo15" widget="radio" string="Anexo XV: Certificado de obras"/>
-                                                <field name="anexo16" widget="radio" string="Anexo XVI: Cómputo métrico y presupuesto de obra"/>
-                                                <field name="anexo17" widget="radio" string="Anexo XVII: Cronograma físico financiero de obra"/>
-                                                <field name="anexo18" widget="radio" string="Anexo XVIII: Análisis fotográficos de obras"/>
-                                            </group>
-                                            
-                                            <group string="Art. 11: Pólizas de Seguros">
-                                                <field name="art11_1" widget="radio" string="Póliza de Seguro de Ejecución de contrato (10%)"/>
-                                                <field name="art11_2" widget="radio" string="Póliza de Seguro de Anticipo Financiero (hasta 20%)"/>
-                                                <field name="art11_3" widget="radio" string="Póliza de Seguro de Responsabilidad Civil"/>
-                                                <field name="art11_4" widget="radio" string="Póliza de Seguro Contra Todo Riesgo Contratista"/>
-                                                <field name="art11_5" widget="radio" string="Póliza de Seguro por Accidentes Personales"/>
-                                                <field name="art11_6" widget="radio" string="Ampliación de Garantía por modificación del cronograma"/>
-                                                <field name="art11_7" widget="radio" string="Presentación de pólizas dentro de los 5 días"/>
-                                            </group>
-                                            
-                                            <group string="Art. 15: Adquisición de bienes y servicios u obras">
-                                                <field name="art15_1" widget="radio" string="Proceso competitivo para adquisiciones a partir de Gs.: 4.999.999"/>
-                                                <field name="art15_2" widget="radio" string="Cuadro comparativo de ofertas - Formulario B 02-08"/>
-                                                <field name="art15_3" widget="radio" string="Prestaciones de servicios que alcancen el monto de Gs.: 4.999.999"/>
-                                                <field name="art15_4" widget="radio" string="Compras de un mismo proveedor que alcancen o superen Gs.: 4.999.999"/>
-                                                <field name="art15_5" widget="radio" string="Nota de aclaración para representante exclusivo"/>
-                                            </group>
-                                            
-                                            <group string="Art. 18: Reglas de visibilidad de financiamiento">
-                                                <field name="art18_1" widget="radio" string="Logo de UEP - SND, Gobierno Nacional, COP, PANAM u Olimpiadas especiales"/>
-                                            </group>
-                                            
-                                            <group string="Observaciones">
-                                                <field name="observaciones"/>
-                                            </group>
-                                        </group>
-                                    </sheet>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Documentos Relacionados">
-                            <field name="documento_ids" nolabel="1">
-                                <tree editable="bottom">
-                                    <field name="name"/>
-                                    <field name="tipo_documento"/>
-                                    <field name="descripcion"/>
-                                    <field name="fecha"/>
-                                    <field name="documento" widget="binary" filename="documento_filename"/>
-                                    <field name="documento_filename" invisible="1"/>
-                                    <field name="user_id"/>
-                                    <field name="state"/>
-                                    <button name="action_aprobar" 
-                                            string="Aprobar" 
-                                            type="object" 
-                                            icon="fa-check" 
-                                            attrs="{'invisible': [('state', '!=', 'borrador')]}"/>
-                                    <button name="action_rechazar" 
-                                            string="Rechazar" 
-                                            type="object" 
-                                            icon="fa-times" 
-                                            attrs="{'invisible': [('state', '!=', 'borrador')]}"/>
-                                    <button name="action_borrador" 
-                                            string="Borrador" 
-                                            type="object" 
-                                            icon="fa-undo" 
-                                            attrs="{'invisible': [('state', '=', 'borrador')]}"/>
-                                </tree>
-                                <form>
-                                    <header>
-                                        <button name="action_aprobar" 
-                                                string="Aprobar" 
-                                                type="object" 
-                                                class="oe_highlight"
-                                                attrs="{'invisible': [('state', '!=', 'borrador')]}"/>
-                                        <button name="action_rechazar" 
-                                                string="Rechazar" 
-                                                type="object" 
-                                                attrs="{'invisible': [('state', '!=', 'borrador')]}"/>
-                                        <button name="action_borrador" 
-                                                string="Volver a Borrador" 
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+
+                            <!-- Documentos relacionados -->
+                            <page string="Documentos Relacionados"
+                                  name="related_documents">
+                                <field name="documento_ids" nolabel="1">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                        <field name="tipo_documento"/>
+                                        <field name="descripcion"/>
+                                        <field name="fecha"/>
+                                        <field name="documento"
+                                               widget="binary"
+                                               filename="documento_filename"/>
+                                        <field name="documento_filename"
+                                               invisible="1"/>
+                                        <field name="user_id"/>
+                                        <field name="state"/>
+
+                                        <button name="action_aprobar"
+                                                string="Aprobar"
                                                 type="object"
-                                                attrs="{'invisible': [('state', '=', 'borrador')]}"/>
-                                        <field name="state" widget="statusbar" 
-                                                statusbar_visible="borrador,aprobado,rechazado"/>
-                                    </header>
-                                    <sheet>
-                                        <group>
+                                                icon="fa-check"
+                                                invisible="state != 'borrador'"/>
+
+                                        <button name="action_rechazar"
+                                                string="Rechazar"
+                                                type="object"
+                                                icon="fa-times"
+                                                invisible="state != 'borrador'"/>
+
+                                        <button name="action_borrador"
+                                                string="Borrador"
+                                                type="object"
+                                                icon="fa-undo"
+                                                invisible="state == 'borrador'"/>
+                                    </list>
+
+                                    <form string="Documento relacionado">
+                                        <header>
+                                            <button name="action_aprobar"
+                                                    string="Aprobar"
+                                                    type="object"
+                                                    class="oe_highlight"
+                                                    invisible="state != 'borrador'"/>
+
+                                            <button name="action_rechazar"
+                                                    string="Rechazar"
+                                                    type="object"
+                                                    invisible="state != 'borrador'"/>
+
+                                            <button name="action_borrador"
+                                                    string="Volver a Borrador"
+                                                    type="object"
+                                                    invisible="state == 'borrador'"/>
+
+                                            <field name="state"
+                                                   widget="statusbar"
+                                                   statusbar_visible="borrador,aprobado,rechazado"/>
+                                        </header>
+
+                                        <sheet>
                                             <group>
-                                                <field name="name"/>
-                                                <field name="tipo_documento"/>
-                                                <field name="fecha"/>
-                                                <field name="user_id"/>
+                                                <group>
+                                                    <field name="name"/>
+                                                    <field name="tipo_documento"/>
+                                                    <field name="fecha"/>
+                                                    <field name="user_id"/>
+                                                </group>
+
+                                                <group>
+                                                    <field name="documento"
+                                                           widget="binary"
+                                                           filename="documento_filename"/>
+                                                    <field name="documento_filename"
+                                                           invisible="1"/>
+                                                    <field name="descripcion"/>
+                                                </group>
                                             </group>
-                                            <group>
-                                                <field name="documento" widget="binary" filename="documento_filename"/>
-                                                <field name="documento_filename" invisible="0"/>
-                                                <field name="descripcion"/>
-                                            </group>
-                                        </group>
-                                    </sheet>
-                                </form>
-                            </field>
-                        </page>
-                    </notebook>
-                </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
-                </div>
-            </form>
-        </field>
-    </record>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
 
-    <!-- Vista Tree para Documentos -->
-    <record id="view_gestion_operacional_documento_tree" model="ir.ui.view">
-        <field name="name">gestion.operacional.documento.tree</field>
-        <field name="model">gestion.operacional.documento</field>
-        <field name="arch" type="xml">
-            <tree>
-                <field name="name"/>
-                <field name="tipo_documento"/>
-                <field name="fecha"/>
-                <field name="user_id"/>
-                <field name="state"/>
-            </tree>
-        </field>
-    </record>
+                        </notebook>
+                    </sheet>
 
-    <!-- Vista Form para Documentos -->
-    <record id="view_gestion_operacional_documento_form" model="ir.ui.view">
-        <field name="name">gestion.operacional.documento.form</field>
-        <field name="model">gestion.operacional.documento</field>
-        <field name="arch" type="xml">
-            <form>
-                <header>
-                    <button name="action_aprobar" 
-                            string="Aprobar" 
-                            type="object" 
-                            class="oe_highlight"
-                            attrs="{'invisible': [('state', '!=', 'borrador')]}"/>
-                    <button name="action_rechazar" 
-                            string="Rechazar" 
-                            type="object" 
-                            attrs="{'invisible': [('state', '!=', 'borrador')]}"/>
-                    <button name="action_borrador" 
-                            string="Volver a Borrador" 
-                            type="object"
-                            attrs="{'invisible': [('state', '=', 'borrador')]}"/>
-                    <field name="state" widget="statusbar" 
-                            statusbar_visible="borrador,aprobado,rechazado"/>
-                </header>
-                <sheet>
-                    <group>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Lista independiente de Documentos -->
+        <record id="view_gestion_operacional_documento_tree" model="ir.ui.view">
+            <field name="name">gestion.operacional.documento.list</field>
+            <field name="model">gestion.operacional.documento</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="tipo_documento"/>
+                    <field name="fecha"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Formulario independiente de Documentos -->
+        <record id="view_gestion_operacional_documento_form" model="ir.ui.view">
+            <field name="name">gestion.operacional.documento.form</field>
+            <field name="model">gestion.operacional.documento</field>
+            <field name="arch" type="xml">
+                <form string="Documento de Gestión Operacional">
+                    <header>
+                        <button name="action_aprobar"
+                                string="Aprobar"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'borrador'"/>
+
+                        <button name="action_rechazar"
+                                string="Rechazar"
+                                type="object"
+                                invisible="state != 'borrador'"/>
+
+                        <button name="action_borrador"
+                                string="Volver a Borrador"
+                                type="object"
+                                invisible="state == 'borrador'"/>
+
+                        <field name="state"
+                               widget="statusbar"
+                               statusbar_visible="borrador,aprobado,rechazado"/>
+                    </header>
+
+                    <sheet>
                         <group>
-                            <field name="gestion_operacional_id"/>
-                            <field name="name"/>
-                            <field name="tipo_documento"/>
-                            <field name="fecha"/>
+                            <group>
+                                <field name="gestion_operacional_id"/>
+                                <field name="name"/>
+                                <field name="tipo_documento"/>
+                                <field name="fecha"/>
+                            </group>
+
+                            <group>
+                                <field name="user_id"/>
+                                <field name="documento"
+                                       widget="binary"
+                                       filename="documento_filename"/>
+                                <field name="documento_filename"
+                                       invisible="1"/>
+                            </group>
                         </group>
-                        <group>
-                            <field name="user_id"/>
-                            <field name="documento" widget="binary" filename="documento_filename"/>
-                            <field name="documento_filename" invisible="0"/>
-                        </group>
-                    </group>
-                    <notebook>
-                        <page string="Descripción">
-                            <field name="descripcion" nolabel="1"/>
-                        </page>
-                    </notebook>
-                </sheet>
-            </form>
-        </field>
-    </record>
 
-    <!-- Primero define todas las acciones -->
-    <record id="action_gestion_operacional" model="ir.actions.act_window">
-        <field name="name">Gestión Operacional</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">gestion.operacional</field>
-        <field name="view_mode">tree,form</field>
-    </record>
+                        <notebook>
+                            <page string="Descripción" name="description">
+                                <field name="descripcion" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
-    <record id="action_gestion_operacional_documento" model="ir.actions.act_window">
-        <field name="name">Documentos de Gestión Operacional</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">gestion.operacional.documento</field>
-        <field name="view_mode">tree,form</field>
-    </record>
+        <!-- Acciones -->
+        <record id="action_gestion_operacional" model="ir.actions.act_window">
+            <field name="name">Gestión Operacional</field>
+            <field name="res_model">gestion.operacional</field>
+            <field name="view_mode">list,form</field>
+        </record>
 
-    <!-- Luego define tus menús -->
-    <menuitem 
-        id="menu_gestion_operacional"
-        name="Gestión Operacional"
-        action="action_gestion_operacional"
-        sequence="10"
-        web_icon="eterp_gestion_operacional,static/description/gestion_operacional.png"/>
+        <record id="action_gestion_operacional_documento"
+                model="ir.actions.act_window">
+            <field name="name">Documentos de Gestión Operacional</field>
+            <field name="res_model">gestion.operacional.documento</field>
+            <field name="view_mode">list,form</field>
+        </record>
 
-    <menuitem 
-        id="menu_gestion_operacional_documento"
-        name="Documentos"
-        action="action_gestion_operacional_documento"
-        parent="menu_gestion_operacional"
-        sequence="20"/>
+        <!-- Menú principal -->
+        <menuitem id="menu_gestion_operacional"
+                  name="Gestión Operacional"
+                  action="action_gestion_operacional"
+                  sequence="10"
+                  web_icon="gestion_operacional,static/description/gestion_operacional.png"/>
 
+        <!-- Menú de documentos -->
+        <menuitem id="menu_gestion_operacional_documento"
+                  name="Documentos"
+                  action="action_gestion_operacional_documento"
+                  parent="menu_gestion_operacional"
+                  sequence="20"/>
 
-
-
+    </data>
 </odoo>

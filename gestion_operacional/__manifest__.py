@@ -5,8 +5,8 @@
     "version": "18.0.1.0.0",
     "summary": "Gestión y seguimiento de operaciones institucionales",
     "description": """
-Gestión Operacional
-===================
+    Gestión Operacional
+    ===================
 
 Aplicación para administrar y controlar procesos operacionales vinculados
 a proyectos institucionales.
@@ -35,7 +35,7 @@ Funcionalidades principales:
     "data": [
         "security/ir.model.access.csv",
         "views/views.xml",
-        "views/templates.xml",
+        "views/logos.xml",
         "report/report.xml",
         "report/report839.xml",
         "report/report879.xml",
