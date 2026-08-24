@@ -108,38 +108,38 @@
                     </div>
                     
                     <!-- Estado detallado con alertas informativas -->
-                    <div class="alert alert-info" role="status" invisble="state != 'assigned'">
-                        <strong>Asignado a: </strong><field name="destinatario" readonly="1" nolabel="1" options="{'no_open': True}"/>
-                    </div>
-                    
-                    <div class="alert alert-info" role="status" invisble="state != 'in_dept'">
-                        <strong>En departamento: </strong><field name="departamento_actual" readonly="1" nolabel="1" options="{'no_open': True}"/>
-                    </div>
-                    
-                    <div class="alert alert-info" role="status" invisble="state != 'to_daf'">
-                        <strong>Pendiente de revisión por D.A.F. </strong>
-                    </div>
-                    
-                    <div class="alert alert-info" role="status" invisble="state != 'in_daf_review'">
-                        <strong>En revisión por D.A.F. </strong>
-                    </div>
-                    
-                    <div class="alert alert-info" role="status" invisble="state != 'back_to_mesa'">
-                        <strong>Devuelto a Mesa de Entrada para asignación </strong>
-                    </div>
-                    
-                    <div class="alert alert-success" role="status" invisble="state != 'done'">
-                        <strong>Expediente completado </strong>
-                    </div>
-                    
-                    <div class="alert alert-danger" role="status" invisble="state != 'cancelled'">
-                        <strong>Expediente cancelado </strong>
-                    </div>
+<!--                    <div class="alert alert-info" role="status" invisble="state != 'assigned'">-->
+<!--                        <strong>Asignado a: </strong><field name="destinatario" readonly="1" nolabel="1" options="{'no_open': True}"/>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                    <div class="alert alert-info" role="status" invisble="state != 'in_dept'">-->
+<!--                        <strong>En departamento: </strong><field name="departamento_actual" readonly="1" nolabel="1" options="{'no_open': True}"/>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                    <div class="alert alert-info" role="status" invisble="state != 'to_daf'">-->
+<!--                        <strong>Pendiente de revisión por D.A.F. </strong>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                    <div class="alert alert-info" role="status" invisble="state != 'in_daf_review'">-->
+<!--                        <strong>En revisión por D.A.F. </strong>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                    <div class="alert alert-info" role="status" invisble="state != 'back_to_mesa'">-->
+<!--                        <strong>Devuelto a Mesa de Entrada para asignación </strong>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                    <div class="alert alert-success" role="status" invisble="state != 'done'">-->
+<!--                        <strong>Expediente completado </strong>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                    <div class="alert alert-danger" role="status" invisble="state != 'cancelled'">-->
+<!--                        <strong>Expediente cancelado </strong>-->
+<!--                    </div>-->
                     
                     <!-- Mensaje cuando está completado o cancelado -->
-                    <div class="alert alert-warning" role="status"  invisible="state not in  ['done', 'cancelled']">
-                        <strong>Expediente finalizado - </strong> Todos los campos están en modo solo lectura
-                    </div>
+<!--                    <div class="alert alert-warning" role="status"  invisible="state not in  ['done', 'cancelled']">-->
+<!--                        <strong>Expediente finalizado - </strong> Todos los campos están en modo solo lectura-->
+<!--                    </div>-->
                     
                     <group>
                         <group>
@@ -150,14 +150,14 @@
                             <field name="departamento_actual" readonly="1"/>
                         </group>
                         <group>
-                            <field name="destinatario" domain="[('user_id', '!=', False)]" readonly="state in  ['done', 'cancelled']"/>
+<!--                            <field name="destinatario" domain="[('user_id', '!=', False)]" readonly="state in  ['done', 'cancelled']"/>-->
                             <field name="oficina_destino" readonly="state in  ['done', 'cancelled']"/>
                             <field name="tipo_documento" readonly="state in  ['done', 'cancelled']"/>
                             <field name="referencia" readonly="state in  ['done', 'cancelled']"/>
-                            <field name="providencia" readonly="state in  ['done', 'cancelled']"/>
-                            <field name="asunto" readonly="state in  ['done', 'cancelled']"/>
-                            <field name="fecha_hora_recepcion" readonly="state in  ['done', 'cancelled']"/>
-                            <field name="quien_recibe" readonly="state in  ['done', 'cancelled']"/>
+                            <field name="providencia" string="Organización" readonly="state in  ['done', 'cancelled']"/>
+<!--                            <field name="asunto" readonly="state in  ['done', 'cancelled']"/>-->
+                            <field name="fecha_hora_recepcion"   readonly="state in  ['done', 'cancelled']"/>
+                            <field name="quien_recibe" string="Recibido" readonly="state in  ['done', 'cancelled']"/>
                         </group>
                     </group>
                     <notebook>
