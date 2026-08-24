@@ -220,9 +220,9 @@
                   decoration-primary="state == 'in_progress' or state == 'in_dept'">
                 <field name="name"/>
                 <field name="fecha"/>
-                <field name="asunto"/>
+<!--                <field name="asunto"/>-->
                 <field name="remitente" optional="show"/>
-                <field name="destinatario" optional="hide"/>
+<!--                <field name="destinatario" optional="hide"/>-->
                 <field name="departamento_actual" optional="hide"/>
                 <field name="state" widget="badge"/>
                 <field name="creado_por" optional="hide"/>
@@ -245,17 +245,17 @@
         <field name="model">mesa.entrada.expediente</field>
         <field name="arch" type="xml">
             <search string="Buscar Expedientes">
-                <field name="asunto"/>
+<!--                <field name="asunto"/>-->
                 <field name="name"/>
                 <field name="remitente"/>
-                <field name="destinatario"/>
+<!--                <field name="destinatario"/>-->
 		        <field name="referencia"/>
-                <filter string="Mis Expedientes" 
-                        domain="[('destinatario.user_id', '=', uid)]" 
-                        name="my_expedientes"/>
+<!--                <filter string="Mis Expedientes" -->
+<!--                        domain="[('destinatario.user_id', '=', uid)]" -->
+<!--                        name="my_expedientes"/>-->
                 <group expand="0" string="Agrupar por">
-                    <filter string="Destinatario" name="group_by_destinatario" 
-                            context="{'group_by': 'destinatario'}"/>
+<!--                    <filter string="Destinatario" name="group_by_destinatario" -->
+<!--                            context="{'group_by': 'destinatario'}"/>-->
                     <filter string="Estado" name="group_by_state" 
                             context="{'group_by': 'state'}"/>
                     <filter string="Fecha" name="group_by_fecha" 
