@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <odoo>
-    <!-- Categoría para los Grupos de Seguridad de Mesa de Entrada -->
+
+    <!-- ========================================================= -->
+    <!-- CATEGORÍA DE SEGURIDAD                                    -->
+    <!-- ========================================================= -->
+
     <record id="module_category_mesa_entrada" model="ir.module.category">
         <field name="name">Mesa de Entrada</field>
         <field name="description">Gestión de Expedientes</field>
         <field name="sequence">20</field>
     </record>
 
-    <!-- Grupo para Mesa de Entrada -->
+
+    <!-- ========================================================= -->
+    <!-- GRUPO MESA DE ENTRADA                                     -->
+    <!-- ========================================================= -->
+
     <record id="group_mesa_entrada" model="res.groups">
         <field name="name">Mesa de Entrada</field>
         <field name="category_id" ref="module_category_mesa_entrada"/>
         <field name="comment">Usuarios de Mesa de Entrada</field>
     </record>
 
-    <!-- Grupo para DAF (Dirección de Administración y Finanzas) -->
+
+    <!-- ========================================================= -->
+    <!-- GRUPO D.A.F.                                              -->
+    <!-- ========================================================= -->
+
     <record id="group_daf" model="res.groups">
         <field name="name">Dirección de Administración y Finanzas</field>
         <field name="category_id" ref="module_category_mesa_entrada"/>
         <field name="comment">Usuarios de la Dirección de Administración y Finanzas</field>
     </record>
 
-    <!-- Grupo para Departamentos y usuarios generales -->
+
+    <!-- ========================================================= -->
+    <!-- GRUPO DEPARTAMENTOS                                       -->
+    <!-- ========================================================= -->
+
     <record id="group_departamentos" model="res.groups">
         <field name="name">Departamentos</field>
         <field name="category_id" ref="module_category_mesa_entrada"/>
@@ -29,8 +46,26 @@
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
-    <!-- Todos los usuarios internos tienen acceso básico de departamentos -->
+
+    <!-- ========================================================= -->
+    <!-- USUARIOS INTERNOS                                         -->
+    <!-- ========================================================= -->
+
     <record id="base.group_user" model="res.groups">
         <field name="implied_ids" eval="[(4, ref('group_departamentos'))]"/>
     </record>
+
+
+    <!-- ========================================================= -->
+    <!-- ACCESO AL MENÚ DE EMPLEADOS                               -->
+    <!-- ========================================================= -->
+
+    <record id="hr.menu_hr_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[
+            (4, ref('group_mesa_entrada')),
+            (4, ref('group_daf')),
+            (4, ref('group_departamentos'))
+        ]"/>
+    </record>
+
 </odoo>
